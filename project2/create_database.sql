@@ -1,15 +1,15 @@
 create table person
 	(VAT integer,
-	 name varchar(255),
-	 address_street varchar(255),
-	 address_city varchar(255),
-	 address_zip varchar(255),
+	 name varchar(35),
+	 address_street varchar(35),
+	 address_city varchar(15),
+	 address_zip varchar(15),
 	 primary Key(VAT));
 
 create table phone_number
 	(VAT integer,
 	 phone integer,
-	 primary key(VAT),
+	 primary key(VAT, phone),
 	 foreign key(VAT) references person(VAT));
 
 create table client
@@ -19,7 +19,7 @@ create table client
 
 create table veterinary
 	(VAT integer,
-	 specialization varchar(255),
+	 specialization varchar(20),
 	 bio varchar(255),
 	 primary key(VAT),
 	 foreign key(VAT) references person(VAT));
@@ -30,16 +30,16 @@ create table assistant
 	 foreign key(VAT) references person(VAT));
 
 create table species
-	(name varchar(255),
-	 desc varchar(255),
+	(name varchar(35),
+	 descript varchar(100),
 	 primary key(name));
 
 create table generalization_species
-	(name1 varchar(255),
-	 name2 varchar(255),
+	(name1 varchar(35),
+	 name2 varchar(35),
 	 primary key(name1),
-	 foreign key(name1) references species(name1),
-	 foreign key(name2) references species(name2));
+	 foreign key(name1) references species(name),
+	 foreign key(name2) references species(name));
 	 
 create table animal
 	(name varchar(255),
