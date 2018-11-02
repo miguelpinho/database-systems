@@ -78,12 +78,12 @@ CREATE TABLE participation
 	 FOREIGN KEY(VAT_assistant) references assistant(VAT));
 
 create table diagnosis_code
-	(code varchar(255),
-	 name varchar(255),
+	(code varchar(50),
+	 name varchar(35),
 	 primary key(code));
 
 create table consult_diagnosis
-	(code varchar(255),
+	(code varchar(50),
 	 name varchar(35),
 	 VAT_owner integer,
 	 date_timestamp timestamp,
@@ -94,6 +94,46 @@ create table consult_diagnosis
 	 foreign key(code) references diagnosis_code(code));
 
 create table medication
-	(name varchar(255),
-	 lab varchar(255),
+	(name VARCHAR(35),
+	 lab VARCHAR(35),
+	 dosage INTEGER,
+	 PRIMARY KEY(name, lab, dosage));
+
+CREATE TABLE prescription 
+	(code VARCHAR(50),
+	 name VARCHAR(35),
+	 VAT_owner INTEGER,
+	 date_timestamp TIMESTAMP,
+	 name_med VARCHAR(35),
+	 lab VARCHAR(35),
+	 dosage INTEGER,
+	 regime VARCHAR(50),
+	 PRIMARY KEY(code, name, VAT_owner, date_timestamp, name_med, lab,dosage),
+	 FOREIGN KEY(code) REFERENCES consult_diagnosis(code),
+	 FOREIGN KEY(name) REFERENCES consult_diagnosis(name),
+	 FOREIGN KEY(VAT_owner) REFERENCES consult_diagnosis(VAT_owner),
+	 FOREIGN KEY(date_timestamp) REFERENCES consult_diagnosis(date_timestamp),
+	 FOREIGN KEY(name_med) REFERENCES medication(name),
+	 FOREIGN KEY(lab) REFERENCES medication(lab),
+	 FOREIGN KEY(dosage) REFERENCES medication(dosage));
+
+CREATE TABLE indicator
+	(name VARCHAR(35),
+	 reference_value INTEGER,
+	 units VARCHAR(10),
+	 descriptions VARCHAR(255),
+	 PRIMARY KEY(name),
 	);
+
+CREATE TABLE procedures
+	(name VARCHAR(35),
+	 VAT_owner INTEGER,
+	 date_timestamp TIMESTAMP,
+	 num INTEGER,
+	 descriptions VARCHAR(255),
+	 PRIMARY KEY(name, VAT_owner, date_timestamp, num),
+	 FOREIGN KEY(name) REFERENCES consult(name),
+	 FOREIGN KEY(VAT_owner) REFERENCES consult(VAT_owner),
+	 FOREIGN KEY(date_timestamp) REFERENCES consult(date_timestamp));
+
+
