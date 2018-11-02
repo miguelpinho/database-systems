@@ -83,3 +83,19 @@ create table diagnosis_code
 	(code varchar(255),
 	 name varchar(255),
 	 primary key(code));
+
+create table consult_diagnosis
+	(code varchar(255),
+	 name varchar(35),
+	 VAT_owner integer,
+	 date_timestamp timestamp,
+	 primary key(code, name, VAT_owner, date_timestamp),
+	 foreign key(name) references consult(name),
+	 foreign key(VAT_owner) references consult(VAT_owner),
+	 foreign key(date_timestamp) references consult(date_timestamp),
+	 foreign key(code) references diagnosis_code(code));
+
+create table medication
+	(name varchar(255),
+	 lab varchar(255),
+	);
