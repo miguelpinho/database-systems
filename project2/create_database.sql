@@ -42,16 +42,16 @@ create table generalization_species
 	 foreign key(name2) references species(name));
 	 
 create table animal
-	(name varchar(255),
+	(name varchar(35),
 	 VAT integer,
-	 species_name varchar(255),
-	 colour varchar(255),
-	 gender varchar(255),
+	 species_name varchar(35),
+	 colour varchar(15),
+	 gender varchar(15),
 	 birth_year date);
 /*Falta acabar o animal, não sei como se faz  A  idade xD*/
 
 create table consult
-	(name, varchar(255),
+	(name varchar(35),
 	 VAT_owner integer,
 	 date_timestamp timestamp,
 	 s varchar(255),
@@ -60,12 +60,13 @@ create table consult
 	 p varchar(255),
 	 VAT_client integer,
 	 VAT_vet integer,
-	 weight int unsigned not NULL, /*COnfimei se é assim por favor!!!*/
-	 primary key( name, VAT_owner, date_timestamp),
-	 foreign key( name) references animal(name),
+	 weight integer not NULL, /*COnfimei se é assim por favor!!!*/
+	 primary key(name, VAT_owner, date_timestamp),
+	 foreign key(name) references animal(name),
 	 foreign key(VAT_owner) references animal (VAT),
 	 foreign key(VAT_client) references client(VAT),
-	 foreign key( VAT_vet) references veterinary(VAT));
+	 foreign key( VAT_vet) references veterinary(VAT)
+     check (weight >= 0));
 
 create table participation
 	(name varchar(255),
