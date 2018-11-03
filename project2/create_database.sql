@@ -47,8 +47,12 @@ CREATE TABLE animal
 	 species_name VARCHAR(35),
 	 colour VARCHAR(15),
 	 gender VARCHAR(15),
-	 birth_year DATE);
-/*Falta acabar o animal, não sei como se faz  A  idade xD*/
+	 birth_year DATE,
+	 age INTEGER,
+	 PRIMARY KEY(name, VAT),
+	 FOREIGN KEY(VAT) REFERENCES client(VAT),
+	 FOREIGN KEY(species_name) REFERENCES species(name));
+
 
 CREATE TABLE consult
 	(name VARCHAR(35),
@@ -77,12 +81,12 @@ CREATE TABLE participation
 	 FOREIGN KEY(VAT_assistant) references assistant(VAT));
 
 create table diagnosis_code
-	(code varchar(255),
-	 name varchar(255),
+	(code varchar(50),
+	 name varchar(35),
 	 primary key(code));
 
 create table consult_diagnosis
-	(code varchar(255),
+	(code varchar(50),
 	 name varchar(35),
 	 VAT_owner integer,
 	 date_timestamp timestamp,
@@ -93,6 +97,96 @@ create table consult_diagnosis
 	 foreign key(code) references diagnosis_code(code));
 
 create table medication
-	(name varchar(255),
-	 lab varchar(255),
+	(name VARCHAR(35),
+	 lab VARCHAR(35),
+	 dosage INTEGER,
+	 PRIMARY KEY(name, lab, dosage));
+
+CREATE TABLE prescription 
+	(code VARCHAR(50),
+	 name VARCHAR(35),
+	 VAT_owner INTEGER,
+	 date_timestamp TIMESTAMP,
+	 name_med VARCHAR(35),
+	 lab VARCHAR(35),
+	 dosage INTEGER,
+	 regime VARCHAR(50),
+	 PRIMARY KEY(code, name, VAT_owner, date_timestamp, name_med, lab,dosage),
+	 FOREIGN KEY(code) REFERENCES consult_diagnosis(code),
+	 FOREIGN KEY(name) REFERENCES consult_diagnosis(name),
+	 FOREIGN KEY(VAT_owner) REFERENCES consult_diagnosis(VAT_owner),
+	 FOREIGN KEY(date_timestamp) REFERENCES consult_diagnosis(date_timestamp),
+	 FOREIGN KEY(name_med) REFERENCES medication(name),
+	 FOREIGN KEY(lab) REFERENCES medication(lab),
+	 FOREIGN KEY(dosage) REFERENCES medication(dosage));
+
+CREATE TABLE indicator
+	(name VARCHAR(35),
+	 reference_value INTEGER,
+	 units VARCHAR(10),
+	 descriptions VARCHAR(255),
+	 PRIMARY KEY(name),
 	);
+
+CREATE TABLE procedures
+	(name VARCHAR(35),
+	 VAT_owner INTEGER,
+	 date_timestamp TIMESTAMP,
+	 num INTEGER,
+	 descriptions VARCHAR(255),
+	 PRIMARY KEY(name, VAT_owner, date_timestamp, num),
+	 FOREIGN KEY(name) REFERENCES consult(name),
+	 FOREIGN KEY(VAT_owner) REFERENCES consult(VAT_owner),
+	 FOREIGN KEY(date_timestamp) REFERENCES consult(date_timestamp));
+
+CREATE TABLE performed
+	(name VARCHAR(35),
+	 VAT_owner INTEGER,
+	 date_timestamp TIMESTAMP,
+	 num INTEGER,
+	 VAT_assistant INTEGER,
+	 PRIMARY KEY(name, VAT_owner, date_timestamp, num, VAT_assistant),
+	 FOREIGN KEY(name) REFERENCES procedures(name),
+	 FOREIGN KEY(VAT_owner) REFERENCES procedures(VAT_owner),
+	 FOREIGN KEY(date_timestamp) REFERENCES procedures(date_timestamp),
+	 FOREIGN KEY(num) REFERENCES procedures(num),
+	 FOREIGN KEY(VAT_assistant) REFERENCES assistant(VAT));
+
+CREATE TABLE radiography
+	(name VARCHAR(35),
+	 VAT_owner INTEGER,
+	 date_timestamp TIMESTAMP,
+	 num INTEGER,
+	 file_path VARCHAR(50),
+	 PRIMARY KEY(name, VAT_owner, date_timestamp, num),
+	 FOREIGN KEY(name) REFERENCES procedures(name),
+	 FOREIGN KEY(VAT_owner) REFERENCES procedures(VAT_owner),
+	 FOREIGN KEY(date_timestamp) REFERENCES procedures(date_timestamp),
+	 FOREIGN KEY(num) REFERENCES procedures(num));
+
+CREATE TABLE test_procedure
+	(name VARCHAR(35),
+	 VAT_owner INTEGER,
+	 date_timestamp TIMESTAMP,
+	 num INTEGER,
+	 test_type VARCHAR(35),
+	 PRIMARY KEY(name, VAT_owner, date_timestamp, num),
+	 FOREIGN KEY(name) REFERENCES procedures(name),
+	 FOREIGN KEY(VAT_owner) REFERENCES procedures(VAT_owner),
+	 FOREIGN KEY(date_timestamp) REFERENCES procedures(date_timestamp),
+	 FOREIGN KEY(num) REFERENCES procedures(num)
+	);
+
+CREATE TABLE produced_indicator
+	(name VARCHAR(35),
+	 VAT_owner INTEGER,
+	 date_timestamp TIMESTAMP,
+	 num INTEGER,
+	 indicator_name VARCHAR(35),
+	 p_value INTEGER,
+	 PRIMARY KEY(name, VAT_owner, date_timestamp, num, indicator_name),
+	 FOREIGN KEY(name) REFERENCES test_procedure(name),
+	 FOREIGN KEY(VAT_owner) REFERENCES test_procedure(VAT_owner),
+	 FOREIGN KEY(date_timestamp) REFERENCES test_procedure(date_timestamp),
+	 FOREIGN KEY(num) REFERENCES test_procedure(num),
+	 FOREIGN KEY(indicator_name) REFERENCES indicator(name));
