@@ -53,7 +53,7 @@ CREATE TABLE animal
 CREATE TABLE consult
 	(name VARCHAR(35),
 	 VAT_owner INTEGER,
-	 date_timestamp timestamp,
+	 date_timestamp TIMESTAMP,
 	 s VARCHAR(255),
 	 o VARCHAR(255),
 	 a VARCHAR(255),
@@ -62,8 +62,7 @@ CREATE TABLE consult
 	 VAT_vet INTEGER,
 	 weight INTEGER NOT NULL, /*COnfimei se é assim por favor!!!*/
 	 PRIMARY KEY(name, VAT_owner, date_timestamp),
-	 FOREIGN KEY(name) REFERENCES animal(name),
-	 FOREIGN KEY(VAT_owner) REFERENCES animal(VAT),
+	 FOREIGN KEY(name, VAT_owner) REFERENCES animal(name, VAT),
 	 FOREIGN KEY(VAT_client) REFERENCES client(VAT),
 	 FOREIGN KEY(VAT_vet) REFERENCES veterinary(VAT),
      CHECK (weight > 0));
