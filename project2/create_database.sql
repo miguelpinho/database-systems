@@ -53,7 +53,6 @@ CREATE TABLE animal
 	 FOREIGN KEY(VAT) REFERENCES client(VAT),
 	 FOREIGN KEY(species_name) REFERENCES species(name));
 
-
 CREATE TABLE consult
 	(name VARCHAR(35),
 	 VAT_owner INTEGER,
@@ -64,7 +63,7 @@ CREATE TABLE consult
 	 p VARCHAR(255),
 	 VAT_client INTEGER,
 	 VAT_vet INTEGER,
-	 weight INTEGER NOT NULL, /*COnfimei se é assim por favor!!!*/
+	 weight NUMERIC(6,3) NOT NULL, /*COnfimei se é assim por favor!!!*/
 	 PRIMARY KEY(name, VAT_owner, date_timestamp),
 	 FOREIGN KEY(name, VAT_owner) REFERENCES animal(name, VAT),
 	 FOREIGN KEY(VAT_client) REFERENCES client(VAT),
