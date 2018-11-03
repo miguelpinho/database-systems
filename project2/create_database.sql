@@ -81,13 +81,13 @@ CREATE TABLE consult
     (name VARCHAR(35),
      VAT_owner INTEGER,
      date_timestamp TIMESTAMP,
+     VAT_client INTEGER,
+     VAT_vet INTEGER,
+     weight NUMERIC(6,3) NOT NULL, /*COnfimei se é assim por favor!!!*/
      s VARCHAR(255),
      o VARCHAR(255),
      a VARCHAR(255),
      p VARCHAR(255),
-     VAT_client INTEGER,
-     VAT_vet INTEGER,
-     weight NUMERIC(6,3) NOT NULL, /*COnfimei se é assim por favor!!!*/
      PRIMARY KEY(name, VAT_owner, date_timestamp),
      FOREIGN KEY(name, VAT_owner) REFERENCES animal(name, VAT),
      FOREIGN KEY(VAT_client) REFERENCES client(VAT),
@@ -138,7 +138,7 @@ CREATE TABLE prescription
 
 CREATE TABLE indicator
     (name VARCHAR(35),
-     reference_value INTEGER,
+     reference_value NUMERIC(5, 2),
      units VARCHAR(10),
      descriptions VARCHAR(255),
      PRIMARY KEY(name));
@@ -186,7 +186,7 @@ CREATE TABLE produced_indicator
      date_timestamp TIMESTAMP,
      num INTEGER,
      indicator_name VARCHAR(35),
-     p_value INTEGER,
+     p_value NUMERIC(5, 2),
      PRIMARY KEY(name, VAT_owner, date_timestamp, num, indicator_name),
      FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES test_procedure(name, VAT_owner, date_timestamp, num),
      FOREIGN KEY(indicator_name) REFERENCES indicator(name));
