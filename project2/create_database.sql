@@ -1,3 +1,27 @@
+/* CREATE DATABASE IF NOT EXISTS vet_clinic; */
+/* USE vet_clinic; */
+
+DROP TABLE IF EXISTS produced_indicator CASCADE;
+DROP TABLE IF EXISTS test_procedure CASCADE;
+DROP TABLE IF EXISTS radiography CASCADE;
+DROP TABLE IF EXISTS performed CASCADE;
+DROP TABLE IF EXISTS procedures CASCADE;
+DROP TABLE IF EXISTS indicator CASCADE;
+DROP TABLE IF EXISTS prescription CASCADE;
+DROP TABLE IF EXISTS medication CASCADE;
+DROP TABLE IF EXISTS consult_diagnosis CASCADE;
+DROP TABLE IF EXISTS diagnosis_code CASCADE;
+DROP TABLE IF EXISTS participation CASCADE;
+DROP TABLE IF EXISTS consult CASCADE;
+DROP TABLE IF EXISTS animal CASCADE;
+DROP TABLE IF EXISTS generalization_species CASCADE;
+DROP TABLE IF EXISTS species CASCADE;
+DROP TABLE IF EXISTS assistant CASCADE;
+DROP TABLE IF EXISTS veterinary CASCADE;
+DROP TABLE IF EXISTS client CASCADE;
+DROP TABLE IF EXISTS phone_number CASCADE;
+DROP TABLE IF EXISTS person CASCADE;
+
 CREATE TABLE person
     (VAT INTEGER,
      name VARCHAR(35),
@@ -90,9 +114,7 @@ create table consult_diagnosis
      VAT_owner integer,
      date_timestamp timestamp,
      primary key(code, name, VAT_owner, date_timestamp),
-     foreign key(name) references consult(name),
-     foreign key(VAT_owner) references consult(VAT_owner),
-     foreign key(date_timestamp) references consult(date_timestamp),
+     foreign key(name, VAT_owner, date_timestamp) references consult(name, VAT_owner, date_timestamp),
      foreign key(code) references diagnosis_code(code));
 
 create table medication
@@ -101,7 +123,7 @@ create table medication
      dosage INTEGER,
      PRIMARY KEY(name, lab, dosage));
 
-CREATE TABLE prescription 
+CREATE TABLE prescription
     (code VARCHAR(50),
      name VARCHAR(35),
      VAT_owner INTEGER,
@@ -110,22 +132,16 @@ CREATE TABLE prescription
      lab VARCHAR(35),
      dosage INTEGER,
      regime VARCHAR(50),
-     PRIMARY KEY(code, name, VAT_owner, date_timestamp, name_med, lab,dosage),
-     FOREIGN KEY(code) REFERENCES consult_diagnosis(code),
-     FOREIGN KEY(name) REFERENCES consult_diagnosis(name),
-     FOREIGN KEY(VAT_owner) REFERENCES consult_diagnosis(VAT_owner),
-     FOREIGN KEY(date_timestamp) REFERENCES consult_diagnosis(date_timestamp),
-     FOREIGN KEY(name_med) REFERENCES medication(name),
-     FOREIGN KEY(lab) REFERENCES medication(lab),
-     FOREIGN KEY(dosage) REFERENCES medication(dosage));
+     PRIMARY KEY(code, name, VAT_owner, date_timestamp, name_med, lab, dosage),
+     FOREIGN KEY(code, name, VAT_owner, date_timestamp) REFERENCES consult_diagnosis(code, name, VAT_owner, date_timestamp),
+     FOREIGN KEY(name_med, lab, dosage) REFERENCES medication(name, lab, dosage));
 
 CREATE TABLE indicator
     (name VARCHAR(35),
      reference_value INTEGER,
      units VARCHAR(10),
      descriptions VARCHAR(255),
-     PRIMARY KEY(name),
-    );
+     PRIMARY KEY(name));
 
 CREATE TABLE procedures
     (name VARCHAR(35),
@@ -134,9 +150,7 @@ CREATE TABLE procedures
      num INTEGER,
      descriptions VARCHAR(255),
      PRIMARY KEY(name, VAT_owner, date_timestamp, num),
-     FOREIGN KEY(name) REFERENCES consult(name),
-     FOREIGN KEY(VAT_owner) REFERENCES consult(VAT_owner),
-     FOREIGN KEY(date_timestamp) REFERENCES consult(date_timestamp));
+     FOREIGN KEY(name, VAT_owner, date_timestamp) REFERENCES consult(name, VAT_owner, date_timestamp));
 
 CREATE TABLE performed
     (name VARCHAR(35),
@@ -145,10 +159,7 @@ CREATE TABLE performed
      num INTEGER,
      VAT_assistant INTEGER,
      PRIMARY KEY(name, VAT_owner, date_timestamp, num, VAT_assistant),
-     FOREIGN KEY(name) REFERENCES procedures(name),
-     FOREIGN KEY(VAT_owner) REFERENCES procedures(VAT_owner),
-     FOREIGN KEY(date_timestamp) REFERENCES procedures(date_timestamp),
-     FOREIGN KEY(num) REFERENCES procedures(num),
+     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES procedures(name, VAT_owner, date_timestamp, num),
      FOREIGN KEY(VAT_assistant) REFERENCES assistant(VAT));
 
 CREATE TABLE radiography
@@ -158,10 +169,7 @@ CREATE TABLE radiography
      num INTEGER,
      file_path VARCHAR(50),
      PRIMARY KEY(name, VAT_owner, date_timestamp, num),
-     FOREIGN KEY(name) REFERENCES procedures(name),
-     FOREIGN KEY(VAT_owner) REFERENCES procedures(VAT_owner),
-     FOREIGN KEY(date_timestamp) REFERENCES procedures(date_timestamp),
-     FOREIGN KEY(num) REFERENCES procedures(num));
+     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES procedures(name, VAT_owner, date_timestamp, num));
 
 CREATE TABLE test_procedure
     (name VARCHAR(35),
@@ -170,11 +178,7 @@ CREATE TABLE test_procedure
      num INTEGER,
      test_type VARCHAR(35),
      PRIMARY KEY(name, VAT_owner, date_timestamp, num),
-     FOREIGN KEY(name) REFERENCES procedures(name),
-     FOREIGN KEY(VAT_owner) REFERENCES procedures(VAT_owner),
-     FOREIGN KEY(date_timestamp) REFERENCES procedures(date_timestamp),
-     FOREIGN KEY(num) REFERENCES procedures(num)
-    );
+     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES procedures(name, VAT_owner, date_timestamp, num));
 
 CREATE TABLE produced_indicator
     (name VARCHAR(35),
@@ -184,8 +188,5 @@ CREATE TABLE produced_indicator
      indicator_name VARCHAR(35),
      p_value INTEGER,
      PRIMARY KEY(name, VAT_owner, date_timestamp, num, indicator_name),
-     FOREIGN KEY(name) REFERENCES test_procedure(name),
-     FOREIGN KEY(VAT_owner) REFERENCES test_procedure(VAT_owner),
-     FOREIGN KEY(date_timestamp) REFERENCES test_procedure(date_timestamp),
-     FOREIGN KEY(num) REFERENCES test_procedure(num),
+     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES test_procedure(name, VAT_owner, date_timestamp, num),
      FOREIGN KEY(indicator_name) REFERENCES indicator(name));
