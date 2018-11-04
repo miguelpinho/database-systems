@@ -10,6 +10,7 @@ INSERT INTO person
 VALUES (1010, 'Jorge Joaquim', 'Av. da Liberdade', 'Lisboa', '1250-144');
 INSERT INTO veterinary
 VALUES (1010, 'general medicine', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, nisl rutrum vestibulum.');
+INSERT INTO assistant VALUES (1010);
 INSERT INTO phone_number VALUES (1010, '313671312'), (1010, '989123412');
 
 INSERT INTO person
@@ -30,9 +31,19 @@ INSERT INTO assistant VALUES (5121);
 INSERT INTO phone_number VALUES (5121, '231-81411');
 
 INSERT INTO person
+VALUES (3366, 'Joana Jovane', 'Av. da Igreja', 'Lisboa', '1700-230');
+INSERT INTO assistant VALUES (3366);
+INSERT INTO phone_number VALUES (3366, '311412741');
+
+INSERT INTO person
 VALUES (4731, 'Poppy Pomfrey', 'Infirmary', 'Hogwarts', '12314-676');
 INSERT INTO assistant VALUES (4731);
 INSERT INTO phone_number VALUES (4731, '741-51251');
+
+INSERT INTO person
+VALUES (5766, 'Maester Luwin', 'Winterfell', 'The North',  '76132-312');
+INSERT INTO assistant VALUES (5766);
+INSERT INTO phone_number VALUES (5766, '671-21341');
 
 INSERT INTO person
 VALUES (12311, 'Harry Potter', 'Gryffindor Hall', 'Hogwartz', '12314-676');
@@ -44,24 +55,51 @@ VALUES (21321, 'Neville Longbottom', 'Gryffindor Hall', 'Hogwartz', '12314-676')
 INSERT INTO client VALUES (21321);
 INSERT INTO phone_number VALUES (21321, '111-11111');
 
+INSERT INTO person
+VALUES (71321, 'Arya Stark', 'Unkown', 'Unkown', 'xxx-xxxx');
+INSERT INTO client VALUES (71321);
+
+INSERT INTO person
+VALUES (86137, 'Brandon Stark', 'Winterfell', 'The North', '76132-312');
+INSERT INTO client VALUES (86137);
+INSERT INTO phone_number VALUES (86137, '923-61233'), (86137, '134-31242'), (86137, '561-23141');
+
+INSERT INTO person
+VALUES (90909, 'Hodor', 'Hodor', 'Hodor', '90909-909');
+INSERT INTO client VALUES (90909);
+INSERT INTO phone_number VALUES (90909, '909-90909');
+
+INSERT INTO person
+VALUES (77777, 'John Snow', 'The Wall', 'The North', '67131-974');
+INSERT INTO client VALUES (77777);
+INSERT INTO phone_number VALUES (77777, '412-34212');
+
 /* species */
 INSERT INTO species
-VALUES('mammal', 'Mammals are vertebrates, distinguished from reptiles (including birds) by the possession of a neocortex (a region of the brain), hair, three middle ear bones, and mammary glands.');
+VALUES ('mammal', 'Mammals are vertebrates, distinguished from reptiles (including birds) by the possession of a neocortex (a region of the brain), hair, three middle ear bones, and mammary glands.'),
+       ('canidae', 'The biological family Canidae is a lineage of carnivorans that includes domestic dogs, wolves, coyotes, foxes, jackals, dingoes, and many other extant and extinct dog-like mammals.'),
+       ('dog', 'The domestic dog is a member of the genus Canis, which forms part of the wolf-like canids, and is the most widely abundant terrestrial carnivore'),
+       ('direwolf', 'The dire wolf (Canis dirus, "fearsome dog") is an extinct species of the genus Canis.');
+INSERT INTO generalization_species
+VALUES ('canidae', 'mammal'), ('dog', 'canidae'), ('direwolf', 'canidae');
 
 INSERT INTO species
-VALUES('bird', 'Birds are a group of endothermic vertebrates, characterised by feathers, toothless beaked jaws, the laying of hard-shelled eggs, ...'),
-      ('owl', 'Owls area a species of mostly solitary and nocturnal birds of prey typified by an upright stance, a large, broad head, binocular vision, binaural hearing, sharp talons, and feathers adapted for silent flight. ');
+VALUES ('bird', 'Birds are a group of endothermic vertebrates, characterised by feathers, toothless beaked jaws, the laying of hard-shelled eggs, ...'),
+       ('owl', 'Owls area a species of mostly solitary and nocturnal birds of prey typified by an upright stance, a large, broad head, binocular vision, binaural hearing, sharp talons, and feathers adapted for silent flight. ');
 INSERT INTO generalization_species VALUES ('owl', 'bird');
 
 INSERT INTO species
-VALUES('amphibian', 'Amphibians are ectothermic, tetrapod vertebrates of the class Amphibia.'),
-      ('frog', 'A frog is any member of a diverse and largely carnivorous group of short-bodied, tailless amphibians composing the order Anura');
+VALUES ('amphibian', 'Amphibians are ectothermic, tetrapod vertebrates of the class Amphibia.'),
+       ('frog', 'A frog is any member of a diverse and largely carnivorous group of short-bodied, tailless amphibians composing the order Anura');
 INSERT INTO generalization_species VALUES ('frog', 'amphibian');
 
 /* animals */
 INSERT INTO animal
 VALUES ('Hedwig', 12311, 'owl', 'white', 'female', '2009-04-06', 9),
-       ('Trevor', 21321, 'frog', 'green', 'male', '2008-12-12', 9);
+       ('Trevor', 21321, 'frog', 'green', 'male', '2008-12-12', 9),
+       ('Summer', 86137, 'direwolf', 'silverly grey', 'male', '2010-04-10', 8),
+       ('Nymeria', 71321, 'direwolf', 'grey', 'female', '2010-04-10', 8),
+       ('Ghost', 77777, 'direwolf', 'white', 'male', '2010-04-10', 8);
 
 /* diagnosis code */
 INSERT INTO diagnosis_code
@@ -78,6 +116,7 @@ VALUES ('AHAA 3124', 'kidney failure'),
 /* medication */
 INSERT INTO medication
 VALUES ('Xanax', 'Niravam', 100),
+       ('Calming Tea', 'Lipton', 1),
        ('Snake Oil', 'Magicians Lta.', 202),
        ('Radaway', 'VaultTec', 1),
        ('Buffout', 'VaultTec', 1),
@@ -95,40 +134,66 @@ VALUES ('blood pressure', 100.0, 'miligrams', 'description'),
 
 /* consult */
 INSERT INTO consult
-VALUES ('Hedwig', 12311, '2018-08-02 10:00:00', 12311, 4581, 14.1,
+VALUES ('Hedwig', 12311, '2017-08-02 10:00:00', 12311, 4581, 14.1,
         'Biltong rump kielbasa pork pork belly bresaola kevin tail ham hock meatloaf tongue.', 'Ground round bresaola short ribs, tongue brisket chuck fatback t-bone picanha alcatra capicola.', 'Hamburger tenderloin ham, prosciutto cupim shankle chicken alcatra.', 'Corned beef cow sirloin beef leberkas salami short loin sausage ball tip pig.'),
-       ('Hedwig', 12311, '2018-09-02 10:00:00', 21321, 1221, 14.7,
+       ('Hedwig', 12311, '2017-09-02 10:00:00', 21321, 1221, 14.7,
         's', 'o', 'a', 'p'),
        ('Hedwig', 12311, '2018-10-02 10:00:00', 12311, 9126, 15.3,
         's', 'o', 'a', 'p'),
        ('Hedwig', 12311, '2018-11-02 10:00:00', 12311, 1221, 14.9,
         's', 'o', 'a', 'p');
 
+INSERT INTO consult
+VALUES ('Summer', 86137, '2017-03-03 15:00:00', 86137, 1010, 20.0,
+        'green dreams', 'sleepyness', 'a', 'p'),
+       ('Summer', 86137, '2017-04-15 08:00:00', 90909, 9126, 25.3,
+        'dreams with crows', 'insomnia', 'a', 'p'),
+       ('Summer', 86137, '2017-05-31 12:00:00', 90909, 4581, 31.9,
+        's', 'obese, fat', 'a', 'p');
+
 /* assintants participating in consults */
 INSERT INTO participation
-VALUES ('Hedwig', 12311, '2018-08-02 10:00:00', 4731);
+VALUES ('Hedwig', 12311, '2017-08-02 10:00:00', 4731),
+       ('Hedwig', 12311, '2017-08-02 10:00:00', 5121);
+
+INSERT INTO participation
+VALUES ('Summer', 86137, '2017-03-03 15:00:00', 1010),
+       ('Summer', 86137, '2017-03-03 15:00:00', 3366),
+       ('Summer', 86137, '2017-03-03 15:00:00', 5766),
+       ('Summer', 86137, '2017-04-15 08:00:00', 5121),
+       ('Summer', 86137, '2017-04-15 08:00:00', 5766);
 
 /* consult diagnosis */
 INSERT INTO consult_diagnosis
-VALUES ('AHAA 1832', 'Hedwig', 12311, '2018-09-02 10:00:00');
+VALUES ('AHAA 1832', 'Hedwig', 12311, '2017-09-02 10:00:00');
+
+INSERT INTO consult_diagnosis
+VALUES ('AHAA 1412', 'Summer', 86137, '2017-03-03 15:00:00'),
+       ('AHAA 1832', 'Summer', 86137, '2017-04-15 08:00:00'),
+       ('AHAA 1923', 'Summer', 86137, '2017-04-15 08:00:00'),
+       ('AHAA 2141', 'Summer', 86137, '2017-05-31 12:00:00');
 
 /* presciption */
 INSERT INTO prescription
-VALUES ('AHAA 1832', 'Hedwig', 12311, '2018-09-02 10:00:00', 'Xanax', 'Niravam', 100, 'One pill one hour before bedtime');
+VALUES ('AHAA 1832', 'Hedwig', 12311, '2017-09-02 10:00:00', 'Xanax', 'Niravam', 100, 'One pill one hour before bedtime');
+
+INSERT INTO prescription
+VALUES ('AHAA 1412', 'Summer', 86137, '2017-03-03 15:00:00', 'Calming Tea', 'Lipton', 1, 'Two doses a day'),
+       ('AHAA 1832', 'Summer', 86137, '2017-04-15 08:00:00', 'Xanax', 'Niravam', 100, 'One pill one hour before bedtime');
 
 /* procedures */
 INSERT INTO procedures
-VALUES ('Hedwig', 12311, '2018-09-02 10:00:00', 1, 'Complete blood analysis');
+VALUES ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'Complete blood analysis');
 
 INSERT INTO test_procedure
-VALUES ('Hedwig', 12311, '2018-09-02 10:00:00', 1, 'Blood analysis');
+VALUES ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'Blood analysis');
 
 INSERT INTO produced_indicator
-VALUES ('Hedwig', 12311, '2018-09-02 10:00:00', 1, 'hemoglobin', 140.0),
-       ('Hedwig', 12311, '2018-09-02 10:00:00', 1, 'white blood cell count', 5.1),
-       ('Hedwig', 12311, '2018-09-02 10:00:00', 1, 'creatine level', 0.4);
+VALUES ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'hemoglobin', 140.0),
+       ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'white blood cell count', 5.1),
+       ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'creatine level', 0.4);
 
 /* assistants performing procedures */
 INSERT INTO performed
-VALUES ('Hedwig', 12311, '2018-09-02 10:00:00', 1, 4731);
+VALUES ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 4731);
 
