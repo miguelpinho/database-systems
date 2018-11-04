@@ -86,7 +86,7 @@ VALUES (15467, 'Steven White', '1910 Pine Tree Lane', 'Washington', '20005'),
        (62736, 'Kelly Mueller', '2797 Bird Street', 'Columbus', '88029'),
        (41461, 'Joseph Mueller', '2797 Bird Street', 'Columbus', '88029'),
        (70627, 'Enrique Edwards', '2425 Penn Street', 'Columbia', '65202');
-INSERT INTO client VALUES (15467), (84698), (63799), (62736), (70627);
+INSERT INTO client VALUES (15467), (84698), (63799), (62736), (41461), (70627);
 INSERT INTO phone_number
 VALUES (15467, '(309)218-6902'), (84698, '(914)545-5719'), (63799, '(702)454-7299'), (62736, '(860)359-0003'), (70627, '(254)298-0325');
 
@@ -130,18 +130,17 @@ VALUES ('Hedwig', 12311, 'owl', 'white', 'female', '2009-04-06', 9),
 
 INSERT INTO animal
 VALUES ('Bailey', 15467, 'pug', 'white', 'male', '2010-12-07', 7),
-       ('Bailey', , 'border terrier', 'black', 'male', '2011-01-13', 7),
-       ('Max', , 'golden sheppard', 'golden', 'male', '2013-02-04', 5),
+       ('Bailey', 84698, 'border terrier', 'black', 'male', '2011-01-13', 7),
+       ('Max', 1221, 'golden retriever', 'golden', 'male', '2013-02-04', 5),
        ('Max', 15467, 'pug', 'brown', 'male', '2016-05-26', 2),
-       ('Charlie', , 'beagle', 'white', 'male', '2016-04-08', 2),
-       ('Buddy', , 'golden retriever', 'golden', 'male', '2013-02-26', 5),
-       ('Bella', , 'pug', 'silverly grey', 'female', '2011-06-11', 7),
-       ('Lucy', , 'golden sheppard', 'golden', 'female', '2010-02-25', 8),
-       ('Daisy', , 'beagle', 'yellow', 'female', '2013-02-14', 5),
+       ('Charlie', 63799, 'beagle', 'white', 'male', '2016-04-08', 2),
+       ('Buddy', 84698, 'golden retriever', 'golden', 'male', '2013-02-26', 5),
+       ('Bella', 70627, 'pug', 'silverly grey', 'female', '2011-06-11', 7),
+       ('Lucy', 84698, 'golden retriever', 'golden', 'female', '2010-02-25', 8),
+       ('Daisy', 63799, 'beagle', 'yellow', 'female', '2013-02-14', 5),
        ('Maggie', 15467, 'pug', 'pink', 'female', '2015-09-09', 3),
-       ('Molly', , 'border terrier', 'white', 'female', '2009-09-16
-', 9),
-       ('Molly', , 'german sheppard', 'dark brown', 'female', '2017-09-05', 1);
+       ('Molly', 63799, 'border terrier', 'white', 'female', '2009-09-16 ', 9),
+       ('Molly', 70627, 'german sheppard', 'dark brown', 'female', '2017-09-05', 1);
 
 /* diagnosis code */
 INSERT INTO diagnosis_code
