@@ -9,7 +9,29 @@
 /* 5. */
 
 /* 6. */
-SELECT COUNT(*) FROM participation AS P WHERE YEAR(P.date_timestamp) IN (2017) GROUP BY P.name, P.VAT_owner, P.date_timestamp;
+SELECT AVG(C.participants) FROM
+    (SELECT COUNT(VAT_assistant) AS participants FROM
+     consult LEFT JOIN participation USING (name, VAT_owner, date_timestamp)
+     WHERE YEAR(date_timestamp) IN (2017)
+     GROUP BY name, VAT_owner, date_timestamp) AS C;
+
+SELECT AVG(C.procs) FROM
+    (SELECT COUNT(num) AS procs FROM
+     consult LEFT JOIN procedures USING (name, VAT_owner, date_timestamp)
+     WHERE YEAR(date_timestamp) IN (2017)
+     GROUP BY name, VAT_owner, date_timestamp) AS C;
+
+SELECT AVG(C.diagnosis) FROM
+    (SELECT COUNT(code) AS diagnosis FROM
+     consult LEFT JOIN consult_diagnosis USING (name, VAT_owner, date_timestamp)
+     WHERE YEAR(date_timestamp) IN (2017)
+     GROUP BY name, VAT_owner, date_timestamp) AS C;
+
+SELECT AVG(C.prescript) FROM
+    (SELECT COUNT(code) AS prescript FROM
+     consult LEFT JOIN prescription USING (name, VAT_owner, date_timestamp)
+     WHERE YEAR(date_timestamp) IN (2017)
+     GROUP BY name, VAT_owner, date_timestamp) AS C;
 
 /* 7. */
 
