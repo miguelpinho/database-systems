@@ -180,7 +180,7 @@ VALUES ('blood pressure', 100.0, 'miligrams', 'description'),
        ('creatine level', 0.5, 'miligrams', 'description'),
        ('Testosterone level', 170, 'miligrams', 'description'),
        ('Adrenaline level', 200, 'miligrams', 'description'),
-       (' Vasopressin', 500, 'miligrams', 'description');
+       ('Vasopressin', 500, 'miligrams', 'description');
 
 /* consult */
 INSERT INTO consult
