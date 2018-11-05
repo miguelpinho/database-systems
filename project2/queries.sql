@@ -1,4 +1,5 @@
 /* 1. */
+select animal.name, person.name, animal.species_name, animal.age from consult, animal, veterinary, person WHERE consult.VAT_vet=veterinary.VAT AND veterinary.VAT=person.VAT AND person.name="john Smith";
 
 /* 2. */
 
