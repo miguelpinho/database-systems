@@ -10,6 +10,7 @@ select distinct animal.name, person.name, animal.species_name, animal.age FROM a
 /* 5. */
 
 /* 6. */
+/* old version
 SELECT AVG(C.participants) FROM
     (SELECT COUNT(VAT_assistant) AS participants FROM
      consult LEFT JOIN participation USING (name, VAT_owner, date_timestamp)
@@ -33,6 +34,7 @@ SELECT AVG(C.prescript) FROM
      consult LEFT JOIN prescription USING (name, VAT_owner, date_timestamp)
      WHERE YEAR(date_timestamp) IN (2017)
      GROUP BY name, VAT_owner, date_timestamp) AS C;
+*/
 
 SELECT AVG(consults2017.assist), AVG(consults2017.prescript), AVG(consults2017.diagnos), AVG(consults2017.proced)  FROM
 (
