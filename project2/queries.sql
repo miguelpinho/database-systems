@@ -1,6 +1,6 @@
 /* 1. */
-select animal.name, person.name, animal.species_name, animal.age from consult, animal, veterinary, person WHERE consult.VAT_vet=veterinary.VAT AND veterinary.VAT=person.VAT AND person.name="john Smith";
 
+select distinct animal.name, person.name, animal.species_name, animal.age FROM animal, client, person, consult, veterinary  WHERE animal.name=consult.name AND consult.VAT_vet=veterinary.VAT AND veterinary.VAT=person.VAT AND person.name="John Smith";
 /* 2. */
 
 /* 3. */

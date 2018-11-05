@@ -177,7 +177,10 @@ VALUES ('blood pressure', 100.0, 'miligrams', 'description'),
        ('mean cell volume', 100.0, 'fL', 'The RBC indices measure the size, shape, and physical characteristics of the RBCs.'),
        ('white blood cell count', 5.0, 'x10^9/L', 'The RBC indices measure the size, shape, and physical characteristics of the RBCs.'),
        ('c-reactive protein', 5.0, 'miligrams', 'The RBC indices measure the size, shape, and physical characteristics of the RBCs.'),
-       ('creatine level', 0.5, 'miligrams', 'description');
+       ('creatine level', 0.5, 'miligrams', 'description'),
+       ('Testosterone level', 170, 'miligrams', 'description'),
+       ('Adrenaline level', 200, 'miligrams', 'description'),
+       (' Vasopressin', 500, 'miligrams', 'description');
 
 /* consult */
 INSERT INTO consult
