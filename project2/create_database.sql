@@ -54,13 +54,13 @@ CREATE TABLE assistant
      FOREIGN KEY(VAT) REFERENCES person(VAT));
 
 CREATE TABLE species
-    (name VARCHAR(35),
+    (name VARCHAR(40),
      descript VARCHAR(255),
      PRIMARY KEY(name));
 
 CREATE TABLE generalization_species
-    (name1 VARCHAR(35),
-     name2 VARCHAR(35),
+    (name1 VARCHAR(40),
+     name2 VARCHAR(40),
      PRIMARY KEY(name1),
      FOREIGN KEY(name1) REFERENCES species(name),
      FOREIGN KEY(name2) REFERENCES species(name));
@@ -68,7 +68,7 @@ CREATE TABLE generalization_species
 CREATE TABLE animal
     (name VARCHAR(35),
      VAT INTEGER,
-     species_name VARCHAR(35),
+     species_name VARCHAR(40),
      colour VARCHAR(15),
      gender VARCHAR(15),
      birth_year DATE,
