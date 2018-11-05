@@ -34,6 +34,23 @@ SELECT AVG(C.prescript) FROM
      WHERE YEAR(date_timestamp) IN (2017)
      GROUP BY name, VAT_owner, date_timestamp) AS C;
 
+SELECT AVG(consults2017.assist), AVG(consults2017.prescript), AVG(consults2017.diagnos), AVG(consults2017.proced)  FROM
+(
+    SELECT COUNT(R.A) assist, COUNT(R.P) prescript, COUNT(R.D) diagnos, COUNT(R.M) proced
+    FROM consult
+    LEFT JOIN (
+        SELECT name, VAT_owner, date_timestamp, VAT_assistant A, NULL P, NULL D, NULL M FROM participation
+        UNION
+        SELECT name, VAT_owner, date_timestamp, NULL A, num P, NULL D, NULL M FROM procedures
+        UNION
+        SELECT name, VAT_owner, date_timestamp, NULL A, NULL P, code D, NULL M FROM consult_diagnosis
+        UNION
+        SELECT name, VAT_owner, date_timestamp, NULL A, NULL P, NULL D, code M FROM prescription
+    ) AS R USING (name, VAT_owner, date_timestamp)
+    WHERE YEAR(date_timestamp) IN (2017)
+    GROUP BY name, VAT_owner, date_timestamp
+) AS consults2017;
+
 /* 7. */
 
 /* 8. */
