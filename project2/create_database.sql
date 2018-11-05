@@ -74,7 +74,7 @@ CREATE TABLE animal
      birth_year DATE,
      age INTEGER,
      PRIMARY KEY(name, VAT),
-     FOREIGN KEY(VAT) REFERENCES client(VAT),
+     FOREIGN KEY(VAT) REFERENCES client(VAT) ON DELETE CASCADE,
      FOREIGN KEY(species_name) REFERENCES species(name));
 
 CREATE TABLE consult
@@ -83,13 +83,13 @@ CREATE TABLE consult
      date_timestamp TIMESTAMP,
      VAT_client INTEGER,
      VAT_vet INTEGER,
-     weight NUMERIC(6,3) NOT NULL, /*COnfimei se é assim por favor!!!*/
+     weight NUMERIC(6,3) NOT NULL, /*Confirmem se é assim por favor!!!*/
      s VARCHAR(255),
      o VARCHAR(255),
      a VARCHAR(255),
      p VARCHAR(255),
      PRIMARY KEY(name, VAT_owner, date_timestamp),
-     FOREIGN KEY(name, VAT_owner) REFERENCES animal(name, VAT),
+     FOREIGN KEY(name, VAT_owner) REFERENCES animal(name, VAT) ON DELETE CASCADE,
      FOREIGN KEY(VAT_client) REFERENCES client(VAT),
      FOREIGN KEY(VAT_vet) REFERENCES veterinary(VAT),
      CHECK (weight > 0));
@@ -100,7 +100,7 @@ CREATE TABLE participation
      date_timestamp TIMESTAMP,
      VAT_assistant INTEGER,
      PRIMARY KEY(name, VAT_owner, date_timestamp, VAT_assistant),
-     FOREIGN KEY(name, VAT_owner, date_timestamp) REFERENCES consult(name, VAT_owner, date_timestamp),
+     FOREIGN KEY(name, VAT_owner, date_timestamp) REFERENCES consult(name, VAT_owner, date_timestamp) ON DELETE CASCADE,
      FOREIGN KEY(VAT_assistant) references assistant(VAT));
 
 create table diagnosis_code
@@ -114,7 +114,7 @@ create table consult_diagnosis
      VAT_owner integer,
      date_timestamp timestamp,
      primary key(code, name, VAT_owner, date_timestamp),
-     foreign key(name, VAT_owner, date_timestamp) references consult(name, VAT_owner, date_timestamp),
+     foreign key(name, VAT_owner, date_timestamp) references consult(name, VAT_owner, date_timestamp) ON DELETE CASCADE,
      foreign key(code) references diagnosis_code(code));
 
 create table medication
@@ -133,7 +133,7 @@ CREATE TABLE prescription
      dosage INTEGER,
      regime VARCHAR(50),
      PRIMARY KEY(code, name, VAT_owner, date_timestamp, name_med, lab, dosage),
-     FOREIGN KEY(code, name, VAT_owner, date_timestamp) REFERENCES consult_diagnosis(code, name, VAT_owner, date_timestamp),
+     FOREIGN KEY(code, name, VAT_owner, date_timestamp) REFERENCES consult_diagnosis(code, name, VAT_owner, date_timestamp) ON DELETE CASCADE,
      FOREIGN KEY(name_med, lab, dosage) REFERENCES medication(name, lab, dosage));
 
 CREATE TABLE indicator
@@ -150,7 +150,7 @@ CREATE TABLE procedures
      num INTEGER,
      descriptions VARCHAR(255),
      PRIMARY KEY(name, VAT_owner, date_timestamp, num),
-     FOREIGN KEY(name, VAT_owner, date_timestamp) REFERENCES consult(name, VAT_owner, date_timestamp));
+     FOREIGN KEY(name, VAT_owner, date_timestamp) REFERENCES consult(name, VAT_owner, date_timestamp) ON DELETE CASCADE) ;
 
 CREATE TABLE performed
     (name VARCHAR(35),
@@ -159,7 +159,7 @@ CREATE TABLE performed
      num INTEGER,
      VAT_assistant INTEGER,
      PRIMARY KEY(name, VAT_owner, date_timestamp, num, VAT_assistant),
-     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES procedures(name, VAT_owner, date_timestamp, num),
+     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES procedures(name, VAT_owner, date_timestamp, num) ON DELETE CASCADE,
      FOREIGN KEY(VAT_assistant) REFERENCES assistant(VAT));
 
 CREATE TABLE radiography
@@ -169,7 +169,7 @@ CREATE TABLE radiography
      num INTEGER,
      file_path VARCHAR(50),
      PRIMARY KEY(name, VAT_owner, date_timestamp, num),
-     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES procedures(name, VAT_owner, date_timestamp, num));
+     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES procedures(name, VAT_owner, date_timestamp, num) ON DELETE CASCADE) ;
 
 CREATE TABLE test_procedure
     (name VARCHAR(35),
@@ -178,7 +178,7 @@ CREATE TABLE test_procedure
      num INTEGER,
      test_type VARCHAR(35),
      PRIMARY KEY(name, VAT_owner, date_timestamp, num),
-     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES procedures(name, VAT_owner, date_timestamp, num));
+     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES procedures(name, VAT_owner, date_timestamp, num) ON DELETE CASCADE) ;
 
 CREATE TABLE produced_indicator
     (name VARCHAR(35),
@@ -188,5 +188,5 @@ CREATE TABLE produced_indicator
      indicator_name VARCHAR(35),
      p_value NUMERIC(5, 2),
      PRIMARY KEY(name, VAT_owner, date_timestamp, num, indicator_name),
-     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES test_procedure(name, VAT_owner, date_timestamp, num),
+     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES test_procedure(name, VAT_owner, date_timestamp, num) ON DELETE CASCADE,
      FOREIGN KEY(indicator_name) REFERENCES indicator(name));
