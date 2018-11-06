@@ -42,6 +42,7 @@ INSERT INTO phone_number VALUES (5121, '231-81411');
 INSERT INTO person
 VALUES (3366, 'Joana Jovane', 'Av. da Igreja', 'Lisboa', '1700-230');
 INSERT INTO assistant VALUES (3366);
+INSERT INTO client VALUES(3366);
 INSERT INTO phone_number VALUES (3366, '311412741');
 
 INSERT INTO person
@@ -128,6 +129,12 @@ VALUES ('amphibian', 'Amphibians are ectothermic, tetrapod vertebrates of the cl
        ('frog', 'A frog is any member of a diverse and largely carnivorous group of short-bodied, tailless amphibians composing the order Anura');
 INSERT INTO generalization_species VALUES ('frog', 'amphibian');
 
+INSERT INTO species
+VALUES ('reptile', 'Reptiles are tetrapod animals in the class Reptilia, compromising turtles, crocodilians, snakes, amphisbaenians, lizards, tuatara, and their extinct relatives.'),
+       ('snake', 'Snakes are elongated, legless, carnivorous reptiles of the suborder Serpentes.'),
+       ('python', 'Python is a genus of nonvenomous Pythonidae found in Africa and Asia.');
+INSERT INTO generalization_species VALUES ('snake', 'reptile'), ('python', 'snake');
+
 
 /*** animals ***/
 INSERT INTO animal
@@ -152,7 +159,9 @@ VALUES ('Bailey', 15467, 'pug', 'white', 'male', '2010-12-07', 7),
        ('Daisy', 63799, 'beagle', 'yellow', 'female', '2013-02-14', 5),
        ('Maggie', 15467, 'pug', 'pink', 'female', '2015-09-09', 3),
        ('Molly', 63799, 'border terrier', 'white', 'female', '2009-09-16 ', 9),
-       ('Molly', 70627, 'german sheppard', 'dark brown', 'female', '2017-09-05', 1);
+       ('Molly', 70627, 'german sheppard', 'dark brown', 'female', '2017-09-05', 1),
+       ('Germildes', 3366, 'bird', 'lilac', 'male', '2015-01-01', 3),
+       ('Tina', 3366, 'python', 'red', 'female', '2014-01-01', 4);
 
 
 /*** diagnosis code ***/
@@ -188,13 +197,13 @@ VALUES ('Xanax', 'Niravam', 100),
 
 /*** indicators ***/
 INSERT INTO indicator
-VALUES ('blood pressure', 100.0, 'miligrams', 'description'),
+VALUES ('blood pressure', 99.9, 'miligrams', 'description'),
        ('hemoglobin', 150.0, 'miligrams', 'The RBC indices measure the size, shape, and physical characteristics of the RBCs.'),
        ('mean cell volume', 100.0, 'fL', 'The RBC indices measure the size, shape, and physical characteristics of the RBCs.'),
        ('white blood cell count', 5.0, 'x10^9/L', 'The RBC indices measure the size, shape, and physical characteristics of the RBCs.'),
        ('c-reactive protein', 5.0, 'miligrams', 'The RBC indices measure the size, shape, and physical characteristics of the RBCs.'),
        ('creatine level', 0.5, 'miligrams', 'description'),
-       ('Testosterone level', 170, 'miligrams', 'description'),
+       ('Testosterone level', 170.0, 'miligrams', 'description'),
        ('Adrenaline level', 200, 'miligrams', 'description'),
        ('Vasopressin', 500, 'miligrams', 'description');
 
@@ -223,7 +232,7 @@ VALUES ('Bailey', 15467, '2017-01-19 10:00:00', 15467, 1010, 15.1,
         's', 'o', 'a', 'p'),
        ('Max', 15467, '2017-01-19 12:00:00', 15467, 2228, 15.1,
         's', 'o', 'a', 'p'),
-       ('Charlie', 63799, '2017-01-19 15:00:00', 63799, 9126, 15.1,
+       ('Charlie', 63799, '2017-01-19 15:00:00', 2228, 9126, 15.1,
         's', 'o', 'a', 'p'),
        ('Bella', 70627, '2017-01-19 17:00:00', 70627, 1221, 15.1,
         's', 'o', 'a', 'p'),
@@ -416,6 +425,8 @@ VALUES ('Bailey', 15467, '2017-01-19 10:00:00', 15467, 1010, 15.1,
        ('Bailey', 84698, '2018-10-01 12:00:00', 84698, 2228, 15.1,
         's', 'o', 'a', 'p'),
        ('Max', 15467, '2018-10-01 15:00:00', 15467, 1221, 15.1,
+        's', 'o', 'a', 'p'),
+       ('Tina', 3366, '2017-01-01 8:00:00', 15467, 1221, 9.9,
         's', 'o', 'a', 'p');
 
 
@@ -544,7 +555,7 @@ VALUES ('AAHA 6731', 'Max', 15467, '2017-01-19 12:00:00'),
        ('AAHA 1832', 'Molly', 63799, '2017-08-21 17:00:00'),
        ('AAHA 5651', 'Max', 15467, '2017-09-11 10:00:00'),
        ('AAHA 3093', 'Max', 15467, '2017-09-11 10:00:00'),
-       ('AAHA 1412', 'Bailey', 84698, '2017-09-11 12:00:00'),
+       ('AAHA 1923', 'Bailey', 84698, '2017-09-11 12:00:00'),
        ('AAHA 2141', 'Bailey', 15467, '2017-09-11 15:00:00'),
        ('AAHA 1412', 'Charlie', 63799, '2017-09-11 17:00:00'),
        ('AAHA 1923', 'Max', 1221, '2017-09-20 10:00:00'),
