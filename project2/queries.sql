@@ -4,25 +4,21 @@ FROM animal, client, person d
 WHERE d.VAT=client.VAT AND animal.VAT=client.VAT AND d.name IN (
   SELECT DISTINCT d.name from consult, person d,person, veterinary WHERE consult.VAT_vet=veterinary.VAT AND veterinary.VAT=person.VAT AND person.name="John Smith" AND d.VAT=consult.VAT_owner);
 
-SELECT pet.name pet_name, person.name owner_name, animal.species_name species, animal.age age
-FROM (
-    SELECT DISTINCT consult.VAT_owner VAT_owner, consult.name name
-    FROM consult
-    INNER JOIN person
-        ON consult.VAT_vet = person.VAT
-    WHERE person.name = "John Smith"
-) AS pet
+SELECT DISTINCT animal.name pet_name, owner.name owner_name, animal.species_name species, animal.age age
+FROM consult
+INNER JOIN person AS vet
+    ON consult.VAT_vet = vet.VAT
+INNER JOIN person AS owner
+    ON consult.VAT_owner = owner.VAT
 INNER JOIN animal
-    ON pet.VAT_owner = animal.VAT AND pet.name = animal.name
-INNER JOIN person
-    ON pet.VAT_owner = person.VAT;
+    ON consult.VAT_owner = animal.VAT and consult.name = animal.name
+WHERE vet.name = "John Smith";
 
 /* 2. */
 SELECT name, reference_value
 FROM indicator
 WHERE units="miligrams" AND reference_value>100.0
 ORDER BY reference_value DESC;
-/*SERÁ ASSIM TÃO SIMPLES?!?!?!?!*/
 
 /* 3. */
 
@@ -75,6 +71,7 @@ FROM (
 ) AS consults2017;
 
 /* 7. */
+/*
 SELECT breed, name disease
 FROM diagnosis_code D
 RIGHT JOIN (
@@ -86,14 +83,21 @@ RIGHT JOIN (
             FROM animal
             WHERE species_name in (select name1 breed from generalization_species where name2 = 'dog')
         ) AS dog
-        INNER JOIN consult_diagnosis C
+        RIGHT JOIN consult_diagnosis C
         ON dog.VAT = C.VAT_owner and dog.name = C.name
         GROUP BY breed, code
     ) AS disease
     GROUP BY breed
 ) AS by_breed
 ON by_breed.code = D.code;
+*/
 
+SELECT species_name breed, code, COUNT(code) freq
+FROM consult_diagnosis diagnosis
+INNER JOIN animal
+    ON diagnosis.name = animal.name AND diagnosis.VAT_owner = animal.VAT
+WHERE animal.species_name in (select name1 breed from generalization_species where name2 = 'dog')
+GROUP BY breed, code;
 /*
 SELECT *
 FROM (
@@ -117,29 +121,21 @@ FROM ( select name1 breed from generalization_species where name2 = 'dog') AS S 
 
 /* 8. */
 SELECT name
-FROM person
-INNER JOIN (
-    SELECT VAT
-    FROM (
-        select distinct VAT from animal
-        UNION
-        select distinct VAT_client VAT from consult
-    ) AS costumer inner join (
-        select VAT from veterinary
-        UNION
-        select VAT from assistant
-    ) AS staff
-    USING (VAT)
-) AS individual
-USING (VAT);
+FROM (
+    select distinct VAT from animal
+    UNION
+    select distinct VAT_client VAT from consult
+) AS costumer INNER JOIN (
+    select VAT from veterinary
+    UNION
+    select VAT from assistant
+) AS staff USING(VAT)
+INNER JOIN person USING(VAT);
 
 /* 9. */
 SELECT name, address_street, address_city, address_zip
-FROM person
-RIGHT JOIN (
-    SELECT VAT
-    FROM client
-    WHERE VAT IN (SELECT DISTINCT VAT FROM animal A WHERE A.species_name = 'bird')
-    AND VAT NOT IN (SELECT DISTINCT VAT FROM animal A WHERE A.species_name <> 'bird')
-) AS bird_owner
-USING (VAT);
+FROM client
+INNER JOIN person
+    USING (VAT)
+WHERE VAT IN (SELECT DISTINCT VAT FROM animal A WHERE A.species_name = 'bird')
+      AND VAT NOT IN (SELECT DISTINCT VAT FROM animal A WHERE A.species_name <> 'bird');
