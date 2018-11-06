@@ -1,8 +1,11 @@
 /* 1. */
 
 select distinct animal.name, person.name, animal.species_name, animal.age FROM animal, client, person, consult, veterinary  WHERE animal.name=consult.name AND consult.VAT_vet=veterinary.VAT AND veterinary.VAT=person.VAT AND person.name="John Smith";
+select distinct animal.name, d.name, animal.species_name, animal.age from animal,client, person d where d.VAT=client.VAT and animal.VAT =client.VAT and d.name in ( select distinct d.name from consult, person d,person, veterinary where consult.VAT_vet=veterinary.VAT and veterinary.VAT=person.VAT and person.name="John Smith" and d.VAT=consult.VAT_owner);
 
 /* 2. */
+select name, reference_value from indicator where units="miligrams" order by reference_value DESC;
+/*SERÁ ASSIM TÃO SIMPLES?!?!?!?!*/
 
 /* 3. */
 
