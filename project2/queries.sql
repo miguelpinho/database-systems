@@ -18,7 +18,10 @@ INNER JOIN person
     ON pet.VAT_owner = person.VAT;
 
 /* 2. */
-select name, reference_value from indicator where units="miligrams" order by reference_value DESC;
+SELECT name, reference_value
+FROM indicator
+WHERE units="miligrams" AND reference_value>100.0
+ORDER BY reference_value DESC;
 /*SERÁ ASSIM TÃO SIMPLES?!?!?!?!*/
 
 /* 3. */
