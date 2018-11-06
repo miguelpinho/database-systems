@@ -181,6 +181,7 @@ VALUES ('AAHA 3124', 'kidney failure'),
        ('AAHA 0132', 'broken paw'),
        ('AAHA 8712', 'hypertension'),
        ('AAHA 5000', 'not aliveness');
+	   
 
 
 /*** medication ***/

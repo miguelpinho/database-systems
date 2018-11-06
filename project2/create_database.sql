@@ -115,7 +115,7 @@ create table consult_diagnosis
      date_timestamp timestamp,
      primary key(code, name, VAT_owner, date_timestamp),
      foreign key(name, VAT_owner, date_timestamp) references consult(name, VAT_owner, date_timestamp) ON DELETE CASCADE,
-     foreign key(code) references diagnosis_code(code));
+     foreign key(code) references diagnosis_code(code) ON DELETE CASCADE);
 
 create table medication
     (name VARCHAR(35),
@@ -133,7 +133,7 @@ CREATE TABLE prescription
      dosage INTEGER,
      regime VARCHAR(50),
      PRIMARY KEY(code, name, VAT_owner, date_timestamp, name_med, lab, dosage),
-     FOREIGN KEY(code, name, VAT_owner, date_timestamp) REFERENCES consult_diagnosis(code, name, VAT_owner, date_timestamp) ON DELETE CASCADE,
+     FOREIGN KEY(code, name, VAT_owner, date_timestamp) REFERENCES consult_diagnosis(code, name, VAT_owner, date_timestamp) ON DELETE CASCADE ON UPDATE CASCADE,
      FOREIGN KEY(name_med, lab, dosage) REFERENCES medication(name, lab, dosage));
 
 CREATE TABLE indicator
