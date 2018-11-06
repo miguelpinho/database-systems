@@ -1,7 +1,21 @@
 /* 1. */
+SELECT DISTINCT animal.name, d.name, animal.species_name, animal.age
+FROM animal, client, person d
+WHERE d.VAT=client.VAT AND animal.VAT=client.VAT AND d.name IN (
+  SELECT DISTINCT d.name from consult, person d,person, veterinary WHERE consult.VAT_vet=veterinary.VAT AND veterinary.VAT=person.VAT AND person.name="John Smith" AND d.VAT=consult.VAT_owner);
 
-select distinct animal.name, person.name, animal.species_name, animal.age FROM animal, client, person, consult, veterinary  WHERE animal.name=consult.name AND consult.VAT_vet=veterinary.VAT AND veterinary.VAT=person.VAT AND person.name="John Smith";
-select distinct animal.name, d.name, animal.species_name, animal.age from animal,client, person d where d.VAT=client.VAT and animal.VAT =client.VAT and d.name in ( select distinct d.name from consult, person d,person, veterinary where consult.VAT_vet=veterinary.VAT and veterinary.VAT=person.VAT and person.name="John Smith" and d.VAT=consult.VAT_owner);
+SELECT pet.name pet_name, person.name owner_name, animal.species_name species, animal.age age
+FROM (
+    SELECT DISTINCT consult.VAT_owner VAT_owner, consult.name name
+    FROM consult
+    INNER JOIN person
+        ON consult.VAT_vet = person.VAT
+    WHERE person.name = "John Smith"
+) AS pet
+INNER JOIN animal
+    ON pet.VAT_owner = animal.VAT AND pet.name = animal.name
+INNER JOIN person
+    ON pet.VAT_owner = person.VAT;
 
 /* 2. */
 select name, reference_value from indicator where units="miligrams" order by reference_value DESC;
@@ -101,7 +115,7 @@ FROM ( select name1 breed from generalization_species where name2 = 'dog') AS S 
 /* 8. */
 SELECT name
 FROM person
-NATURAL RIGHT JOIN (
+INNER JOIN (
     SELECT VAT
     FROM (
         select distinct VAT from animal
@@ -113,7 +127,8 @@ NATURAL RIGHT JOIN (
         select VAT from assistant
     ) AS staff
     USING (VAT)
-) AS individual;
+) AS individual
+USING (VAT);
 
 /* 9. */
 SELECT name, address_street, address_city, address_zip
