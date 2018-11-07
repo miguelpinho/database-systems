@@ -30,6 +30,13 @@ INNER JOIN person
 WHERE s LIKE '%obese%' OR s LIKE '%obesity%' OR o LIKE '%obese%' OR o LIKE '%obesity%' OR  a LIKE '%obese%' OR a LIKE '%obesity%' OR  p LIKE '%obese%' OR p LIKE '%obesity%' AND weight>30;
 
 /* 4. */
+select person.name, person.VAT, person.address_street,person.address_city,person.address_zip 
+FROM person 
+INNER JOIN  client 
+    ON person.VAT=client.VAT 
+LEFT JOIN animal 
+    ON client.VAT=animal.VAT 
+WHERE animal.VAT IS NULL;
 
 /* 5. */
 
