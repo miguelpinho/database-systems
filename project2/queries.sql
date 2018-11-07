@@ -40,6 +40,21 @@ WHERE animal.VAT IS NULL;
 
 /* 5. */
 
+/*PRIMEIRA SOLUCÃO*/
+select distinct diagnosis_code.code, diagnosis_code.name, count(distinct prescription.name_med) 
+FROM diagnosis_code 
+INNER JOIN consult_diagnosis 
+    ON diagnosis_code.code=consult_diagnosis.code 
+LEFT JOIN  prescription 
+    ON consult_diagnosis.code=prescription.code 
+GROUP BY diagnosis_code.code;
+
+/*SEGUNDA SOLUÇÃO*/
+select prescription.code,prescription.name_med, count(distinct name_med) 
+FROM prescription 
+GROUP BY code;
+
+
 /* 6. */
 /* old version
 SELECT AVG(C.participants) FROM
