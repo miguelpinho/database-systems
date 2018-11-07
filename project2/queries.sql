@@ -21,6 +21,13 @@ WHERE units="miligrams" AND reference_value>100.0
 ORDER BY reference_value DESC;
 
 /* 3. */
+SELECT animal.name,person.name ,animal.species_name, animal.age 
+FROM animal 
+INNER JOIN consult
+    ON animal.VAT=consult.VAT_owner 
+INNER JOIN person 
+    ON animal.VAT=person.VAT 
+WHERE s LIKE '%obese%' OR s LIKE '%obesity%' OR o LIKE '%obese%' OR o LIKE '%obesity%' OR  a LIKE '%obese%' OR a LIKE '%obesity%' OR  p LIKE '%obese%' OR p LIKE '%obesity%' AND weight>30;
 
 /* 4. */
 
