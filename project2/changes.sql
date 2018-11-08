@@ -39,4 +39,7 @@ update consult_diagnosis
 		name = name, 
 		VAT_owner = VAT_owner, 
 		date_timestamp = date_timestamp 
-	where test_procedure.test_type = 'Blood analysis' and produced_indicator.p_value > 1.0;
+	where test_procedure.test_type = 'Blood analysis' and consult_diagnosis.code = 
+		(select code 
+		from diagnosis_code 
+		where name = 'kidney failure') and produced_indicator.p_value > 1.0;

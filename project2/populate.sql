@@ -192,7 +192,8 @@ VALUES ('Xanax', 'Niravam', 100),
        ('Radaway', 'VaultTec', 1),
        ('Buffout', 'VaultTec', 1),
        ('Brufen', 'FP', 400),
-       ('Brufen', 'FP', 600);
+       ('Brufen', 'FP', 600),
+       ('Mandrake potion', 'Sprout', 1);
 
 
 /*** indicators ***/
@@ -631,7 +632,8 @@ VALUES ('AAHA 6731', 'Max', 15467, '2017-01-19 12:00:00'),
 
 /*** presciption ***/
 INSERT INTO prescription
-VALUES ('AAHA 1832', 'Hedwig', 12311, '2017-09-02 10:00:00', 'Xanax', 'Niravam', 100, 'One pill one hour before bedtime');
+VALUES ('AAHA 1832', 'Hedwig', 12311, '2017-09-02 10:00:00', 'Xanax', 'Niravam', 100, 'One pill one hour before bedtime'),
+        ('AAHA 1832', 'Hedwig', 12311, '2017-09-02 10:00:00', 'Mandrake potion', 'Sprout', 1, '1 liter one hour before bedtime');
 
 INSERT INTO prescription
 VALUES ('AAHA 1412', 'Summer', 86137, '2017-03-03 15:00:00', 'Calming Tea', 'Lipton', 1, 'Two doses a day'),
@@ -640,7 +642,8 @@ VALUES ('AAHA 1412', 'Summer', 86137, '2017-03-03 15:00:00', 'Calming Tea', 'Lip
 
 /*** procedures ***/
 INSERT INTO procedures
-VALUES ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'Complete blood analysis');
+VALUES ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'Complete blood analysis'),
+        ('Hedwig', 12311, '2017-09-02 10:00:00', 2, 'Anti petrificus totalus');
 
 INSERT INTO test_procedure
 VALUES ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'Blood analysis');
