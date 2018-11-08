@@ -42,7 +42,8 @@ INNER JOIN consult_diagnosis
     ON diagnosis_code.code=consult_diagnosis.code 
 LEFT JOIN  prescription 
     ON consult_diagnosis.code=prescription.code 
-GROUP BY diagnosis_code.code;
+GROUP BY diagnosis_code.code
+ORDER BY count(distinct prescription.name_med);
 
 /*SEGUNDA SOLUÇÃO*/
 select prescription.code,prescription.name_med, count(distinct name_med) 
