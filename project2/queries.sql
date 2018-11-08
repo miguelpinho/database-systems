@@ -79,6 +79,23 @@ FROM (
     GROUP BY name, VAT_owner, date_timestamp, assists, procds, diagnos
 ) AS consults2017;
 
+SELECT AVG(consults2017.assists), AVG(consults2017.procds), AVG (consults2017.diagnos), AVG(consults2017.prescript)
+FROM (
+    SELECT name, VAT_owner, date_timestamp, COUNT(distinct prescription.code, name_med, lab, dosage) AS prescript, COUNT(distinct consult_diagnosis.code) AS diagnos, COUNT(distinct num) AS procds, COUNT(distinct VAT_assistant) AS assists
+    FROM (((
+        consult
+            LEFT JOIN participation
+                USING (name, VAT_owner, date_timestamp))
+            LEFT JOIN procedures
+                USING (name, VAT_owner, date_timestamp))
+        LEFT JOIN consult_diagnosis
+            USING (name, VAT_owner, date_timestamp))
+    LEFT JOIN prescription
+        USING (name, VAT_owner, date_timestamp)
+		WHERE YEAR(date_timestamp) IN (2017)
+    GROUP BY name, VAT_owner, date_timestamp
+) AS consults2017;
+
 /* 7. */
 SELECT breed, name, freq
 FROM (

@@ -22,6 +22,8 @@ DROP TABLE IF EXISTS client CASCADE;
 DROP TABLE IF EXISTS phone_number CASCADE;
 DROP TABLE IF EXISTS person CASCADE;
 
+DROP VIEW IF EXISTS dim_animal, dim_date, facts_consults CASCADE;
+
 CREATE TABLE person
     (VAT INTEGER,
      name VARCHAR(35),
