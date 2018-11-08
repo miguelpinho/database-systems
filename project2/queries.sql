@@ -1,9 +1,4 @@
 /* 1. */
-SELECT DISTINCT animal.name, d.name, animal.species_name, animal.age
-FROM animal, client, person d
-WHERE d.VAT=client.VAT AND animal.VAT=client.VAT AND d.name IN (
-  SELECT DISTINCT d.name from consult, person d,person, veterinary WHERE consult.VAT_vet=veterinary.VAT AND veterinary.VAT=person.VAT AND person.name="John Smith" AND d.VAT=consult.VAT_owner);
-
 SELECT DISTINCT animal.name pet_name, owner.name owner_name, animal.species_name species, animal.age age
 FROM consult
 INNER JOIN person AS vet
@@ -17,7 +12,7 @@ WHERE vet.name = "John Smith";
 /* 2. */
 SELECT name, reference_value
 FROM indicator
-WHERE units="miligrams" AND reference_value>100.0
+WHERE units = "miligrams" AND reference_value > 100.0
 ORDER BY reference_value DESC;
 
 /* 3. */
@@ -39,6 +34,22 @@ LEFT JOIN animal
 WHERE animal.VAT IS NULL;
 
 /* 5. */
+
+/*PRIMEIRA SOLUCÃO*/
+select distinct diagnosis_code.code, diagnosis_code.name, count(distinct prescription.name_med) 
+FROM diagnosis_code 
+INNER JOIN consult_diagnosis 
+    ON diagnosis_code.code=consult_diagnosis.code 
+LEFT JOIN  prescription 
+    ON consult_diagnosis.code=prescription.code 
+GROUP BY diagnosis_code.code
+ORDER BY count(distinct prescription.name_med);
+
+/*SEGUNDA SOLUÇÃO*/
+select prescription.code,prescription.name_med, count(distinct name_med) 
+FROM prescription 
+GROUP BY code;
+
 
 /* 6. */
 /* old version
@@ -85,53 +96,50 @@ FROM (
 ) AS consults2017;
 
 /* 7. */
-/*
-SELECT breed, name disease
-FROM diagnosis_code D
-RIGHT JOIN (
-    SELECT breed, any_value(code) as code, max(freq)
+SELECT breed, name, freq
+FROM (
+    SELECT species_name breed, code, COUNT(code) freq
+    FROM consult_diagnosis diagnosis
+    INNER JOIN animal
+        ON diagnosis.name = animal.name AND diagnosis.VAT_owner = animal.VAT
+    WHERE animal.species_name in (select name1 breed from generalization_species where name2 = 'dog')
+    GROUP BY breed, code
+) AS disease_count
+INNER JOIN diagnosis_code
+    USING (code)
+WHERE (breed, freq) IN (
+    SELECT breed, max(freq) freq
     FROM (
-        SELECT species_name breed, code, count(code) freq
-        FROM (
-            SELECT *
-            FROM animal
-            WHERE species_name in (select name1 breed from generalization_species where name2 = 'dog')
-        ) AS dog
-        RIGHT JOIN consult_diagnosis C
-        ON dog.VAT = C.VAT_owner and dog.name = C.name
+        SELECT species_name breed, code, COUNT(code) freq
+        FROM consult_diagnosis diagnosis
+        INNER JOIN animal
+            ON diagnosis.name = animal.name AND diagnosis.VAT_owner = animal.VAT
+        WHERE animal.species_name in (select name1 breed from generalization_species where name2 = 'dog')
         GROUP BY breed, code
-    ) AS disease
+    ) AS disease_count
     GROUP BY breed
-) AS by_breed
-ON by_breed.code = D.code;
-*/
+);
 
-SELECT species_name breed, code, COUNT(code) freq
+SELECT species_name breed, disease.name, COUNT(code) freq
 FROM consult_diagnosis diagnosis
 INNER JOIN animal
     ON diagnosis.name = animal.name AND diagnosis.VAT_owner = animal.VAT
+INNER JOIN diagnosis_code disease
+    using (code)
 WHERE animal.species_name in (select name1 breed from generalization_species where name2 = 'dog')
-GROUP BY breed, code;
-/*
-SELECT *
-FROM (
-    SELECT species_name breed, code, count(code) freq
+GROUP BY breed, code
+HAVING (breed, freq) IN (
+    SELECT breed, max(freq) freq
     FROM (
-        SELECT *
-        FROM animal
-        WHERE species_name in (select name1 breed from generalization_species where name2 = 'dog')
-    ) AS dog
-    INNER JOIN consult_diagnosis C
-    ON dog.VAT = C.VAT_owner and dog.name = C.name
-    GROUP BY breed, code
-) AS disease
-ORDER BY breed, freq DESC;
-*/
-
-/*
-SELECT *
-FROM ( select name1 breed from generalization_species where name2 = 'dog') AS S LEFT JOIN animal A ON S.breed = A.species_name;
-*/
+        SELECT species_name breed, code, COUNT(code) freq
+        FROM consult_diagnosis diagnosis
+        INNER JOIN animal
+            ON diagnosis.name = animal.name AND diagnosis.VAT_owner = animal.VAT
+        WHERE animal.species_name in (select name1 breed from generalization_species where name2 = 'dog')
+        GROUP BY breed, code
+    ) AS disease_count
+    GROUP BY breed
+);
 
 /* 8. */
 SELECT name
