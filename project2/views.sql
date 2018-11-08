@@ -13,7 +13,7 @@ create view dim_animal as
 select * 
     from dim_animal;
 
-/* 3. */ 
+/* 3. */
 create view facts_consults as 
     (select dim_animal.animal_name, dim_animal.animal_vat , dim_date.date_timestamp, count(distinct num) as num_procedures, count(distinct name_med) as num_medications
         from dim_date inner join (dim_animal 

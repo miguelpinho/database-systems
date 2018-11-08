@@ -1,6 +1,6 @@
 /* 1. */
 update person 
-set address_street = 'Rua Comandante', address_city = 'Alcanena', address_zip = '2380-048' 
+set address_street = 'Rua Comandante', address_city = 'Alcanena' 
 	where name = 'John Smith';
 
 /* 2. */
@@ -11,7 +11,7 @@ update indicator
 		on test_procedure.num = produced_indicator.num 
 set reference_value = 1.1 *  reference_value
 	where test_procedure.test_type = 'Blood analysis' 
-	and indicator.units = 'miligrams';
+	and indicator.units = 'milligrams';
 
 /* 3. */
 delete from client 
@@ -39,7 +39,7 @@ update consult_diagnosis
 		name = name, 
 		VAT_owner = VAT_owner, 
 		date_timestamp = date_timestamp 
-	where test_procedure.test_type = 'Blood analysis' and consult_diagnosis.code = 
+	where produced_indicator.indicator_name = 'creatine level' and consult_diagnosis.code = 
 		(select code 
 		from diagnosis_code 
 		where name = 'kidney failure') and produced_indicator.p_value > 1.0;
