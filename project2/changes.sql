@@ -1,24 +1,25 @@
+/*** 1. ***/
 /* VERIFICATION */
-select * from person where name = 'John Smith';
+SELECT * FROM person WHERE name = 'John Smith';
 
-/* 1. */
-update person
-set address_street = 'Rua Comandante', address_city = 'Alcanena'
-    where name = 'John Smith';
-
-/* VERIFICATION */
-select * from person where name = 'John Smith';
+/* CHANGE */
+UPDATE person
+SET address_street = 'Rua Comandante', address_city = 'Alcanena'
+    WHERE name = 'John Smith';
 
 /* VERIFICATION */
+SELECT * FROM person WHERE name = 'John Smith';
 
-select indicator.name, units, test_type, reference_value
-    from indicator inner join
-        (test_procedure left join
+/* 2. */
+/* VERIFICATION */
+SELECT indicator.name, units, test_type, reference_value
+    FROM indicator INNER JOIN
+        (test_procedure LEFT JOIN
             produced_indicator using
             (name, VAT_owner, date_timestamp, num))
         on produced_indicator.indicator_name = indicator.name;
 
-/* 2. */
+/* CHANGE */
 update indicator
     inner join
         (test_procedure left join
@@ -30,7 +31,6 @@ set reference_value = 1.1 *  reference_value
     and indicator.units = 'milligrams';
 
 /* VERIFICATION */
-
 select indicator.name, units, test_type, reference_value
     from indicator inner join
         (test_procedure left join
