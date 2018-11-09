@@ -85,7 +85,7 @@ CREATE TABLE consult
      date_timestamp TIMESTAMP,
      VAT_client INTEGER,
      VAT_vet INTEGER,
-     weight NUMERIC(6,3) NOT NULL, /*Confirmem se é assim por favor!!!*/
+     weight NUMERIC(6,3) NOT NULL,
      s VARCHAR(255),
      o VARCHAR(255),
      a VARCHAR(255),
@@ -180,7 +180,8 @@ CREATE TABLE test_procedure
      num INTEGER,
      test_type VARCHAR(35),
      PRIMARY KEY(name, VAT_owner, date_timestamp, num),
-     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES procedures(name, VAT_owner, date_timestamp, num) ON DELETE CASCADE) ;
+     FOREIGN KEY(name, VAT_owner, date_timestamp, num) REFERENCES procedures(name, VAT_owner, date_timestamp, num) ON DELETE CASCADE,
+     CHECK(test_type = "blood" OR test_type = "urine"));
 
 CREATE TABLE produced_indicator
     (name VARCHAR(35),
