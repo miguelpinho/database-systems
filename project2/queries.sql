@@ -34,7 +34,6 @@ LEFT JOIN animal
 WHERE animal.VAT IS NULL;
 
 /* 5. */
-/*PRIMEIRA SOLUCÃO*/
 SELECT DISTINCT diagnosis_code.code, diagnosis_code.name, COUNT(DISTINCT prescription.name_med)
 FROM diagnosis_code
 LEFT JOIN consult_diagnosis
@@ -44,40 +43,7 @@ LEFT JOIN  prescription
 GROUP BY diagnosis_code.code
 ORDER BY COUNT(DISTINCT prescription.name_med);
 
-/*SEGUNDA SOLUÇÃO*/
-select prescription.code,prescription.name_med, count(distinct name_med)
-FROM prescription
-GROUP BY code;
-
 /* 6. */
-SELECT AVG(consults2017.assists), AVG(consults2017.procds), AVG (consults2017.diagnos), AVG(consults2017.prescript)
-FROM (
-    SELECT name, VAT_owner, date_timestamp, assists, procds, diagnos, COUNT(code) AS prescript
-    FROM (
-        SELECT name, VAT_owner, date_timestamp, assists, procds, COUNT(code) AS diagnos
-        FROM (
-            SELECT name, VAT_owner, date_timestamp, assists, COUNT(num) AS procds
-            FROM (
-                SELECT name, VAT_owner, date_timestamp, COUNT(VAT_assistant) AS assists
-                FROM consult
-                LEFT JOIN participation
-                    USING (name, VAT_owner, date_timestamp)
-                WHERE YEAR(date_timestamp) IN (2017)
-                GROUP BY name, VAT_owner, date_timestamp
-            ) AS C
-            LEFT JOIN procedures
-                USING (name, VAT_owner, date_timestamp)
-            GROUP BY name, VAT_owner, date_timestamp, assists
-        ) AS C
-        LEFT JOIN consult_diagnosis
-            USING (name, VAT_owner, date_timestamp)
-        GROUP BY name, VAT_owner, date_timestamp, assists, procds
-    ) AS C
-    LEFT JOIN prescription
-        USING (name, VAT_owner, date_timestamp)
-    GROUP BY name, VAT_owner, date_timestamp, assists, procds, diagnos
-) AS consults2017;
-
 SELECT AVG(consults2017.assists), AVG(consults2017.procds), AVG (consults2017.diagnos), AVG(consults2017.prescript)
 FROM (
     SELECT name, VAT_owner, date_timestamp, COUNT(distinct prescription.code, name_med, lab, dosage) AS prescript, COUNT(distinct consult_diagnosis.code) AS diagnos, COUNT(distinct num) AS procds, COUNT(distinct VAT_assistant) AS assists
