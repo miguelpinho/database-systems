@@ -25,31 +25,38 @@ INNER JOIN person
 WHERE o LIKE '%obese%' OR o LIKE '%obesity%' AND weight > 30;
 
 /*NEW version*/
-SELECT animal.name, person.name AS owner, animal.species_name, animal.age 
-FROM
-    ( 
-        SELECT consult.name, consult.VAT_owner, consult.date_timestamp, consult.weight 
-        FROM consult 
-        WHERE consult.date_timestamp 
-        IN ( 
-            SELECT MAX(date_timestamp) 
-            FROM consult 
-            GROUP BY consult.VAT_owner
-            ) 
-        AND consult.weight>30
-    )AS A 
-    INNER JOIN 
-    (
-        SELECT * 
-        FROM consult 
-        WHERE o LIKE '%obese%' OR o LIKE '%obesity%'
-    )AS B 
-        ON A.VAT_owner=B.VAT_owner 
-    INNER JOIN animal 
-        ON  A.VAT_owner=animal.VAT 
-    INNER JOIN person 
-        ON animal.VAT=person.VAT;
+SELECT animal.name, person.name AS owner, animal.species_name, animal.age
+FROM (
+    SELECT consult.name name, consult.VAT_owner
+    FROM consult
+    WHERE (consult.name, consult.VAT_owner, consult.date_timestamp)
+    IN (
+        SELECT consult.name, consult.VAT_owner, MAX(date_timestamp)
+        FROM consult
+        GROUP BY consult.name, consult.VAT_owner
+    )
+    AND consult.weight > 30
+) AS A
+INNER JOIN (
+    SELECT DISTINCT consult.name name, consult.VAT_owner
+    FROM consult
+    WHERE o LIKE '%obese%' OR o LIKE '%obesity%'
+)AS B
+    ON A.VAT_owner = B.VAT_owner AND A.name = B.name
+INNER JOIN animal
+    ON  A.VAT_owner=animal.VAT
+INNER JOIN person
+    ON animal.VAT=person.VAT;
 
+    SELECT *
+    FROM consult
+    WHERE (consult.name, consult.VAT_owner, consult.date_timestamp)
+    IN (
+        SELECT consult.name, consult.VAT_owner, MAX(date_timestamp)
+        FROM consult
+        GROUP BY consult.name, consult.VAT_owner
+    )
+    AND consult.weight > 30;
 
 /* 4. */
 SELECT person.name, person.VAT, person.address_street, person.address_city, person.address_zip
