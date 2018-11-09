@@ -48,16 +48,6 @@ INNER JOIN animal
 INNER JOIN person
     ON animal.VAT=person.VAT;
 
-    SELECT *
-    FROM consult
-    WHERE (consult.name, consult.VAT_owner, consult.date_timestamp)
-    IN (
-        SELECT consult.name, consult.VAT_owner, MAX(date_timestamp)
-        FROM consult
-        GROUP BY consult.name, consult.VAT_owner
-    )
-    AND consult.weight > 30;
-
 /* 4. */
 SELECT person.name, person.VAT, person.address_street, person.address_city, person.address_zip
 FROM person
@@ -95,7 +85,7 @@ FROM (
 ) AS consults2017;
 
 /* 7. */
-SELECT breed, name, freq
+SELECT breed, name disease, freq
 FROM (
     SELECT species_name breed, code, COUNT(code) freq
     FROM consult_diagnosis diagnosis
