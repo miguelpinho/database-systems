@@ -15,15 +15,6 @@ FROM indicator
 WHERE units = "milligrams" AND reference_value > 100.0
 ORDER BY reference_value DESC;
 
-/* 3. */
-SELECT animal.name,person.name ,animal.species_name, animal.age
-FROM animal
-INNER JOIN consult
-    ON animal.VAT=consult.VAT_owner
-INNER JOIN person
-    ON animal.VAT=person.VAT
-WHERE o LIKE '%obese%' OR o LIKE '%obesity%' AND weight > 30;
-
 /*NEW version*/
 SELECT animal.name, person.name AS owner, animal.species_name, animal.age
 FROM (
@@ -58,7 +49,7 @@ LEFT JOIN animal
 WHERE animal.VAT IS NULL;
 
 /* 5. */
-SELECT DISTINCT diagnosis_code.code, diagnosis_code.name, COUNT(DISTINCT prescription.name_med)
+SELECT DISTINCT diagnosis_code.code, diagnosis_code.name, COUNT(DISTINCT prescription.name_med) AS n_medication
 FROM diagnosis_code
 LEFT JOIN consult_diagnosis
     USING (code)
@@ -68,7 +59,7 @@ GROUP BY diagnosis_code.code
 ORDER BY COUNT(DISTINCT prescription.name_med);
 
 /* 6. */
-SELECT AVG(consults2017.assists), AVG(consults2017.procds), AVG (consults2017.diagnos), AVG(consults2017.prescript)
+SELECT AVG(consults2017.assists) AS assistants_avg, AVG(consults2017.procds) AS procedures_avg, AVG (consults2017.diagnos) AS diagnosis_avg, AVG(consults2017.prescript) AS prescriptions_avg
 FROM (
     SELECT name, VAT_owner, date_timestamp, COUNT(distinct prescription.code, name_med, lab, dosage) AS prescript, COUNT(distinct consult_diagnosis.code) AS diagnos, COUNT(distinct num) AS procds, COUNT(distinct VAT_assistant) AS assists
     FROM consult

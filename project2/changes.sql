@@ -66,6 +66,7 @@ select person.name, count(animal.VAT) as n_animals from person left join animal 
 select person.name, count(consult.name) as n_consults from person left join consult on consult.VAT_owner = VAT where person.name = 'John Smith' group by person.name;
 
 /* VERIFICATION */
+select * from diagnosis_code where name = 'end-stage renal disease';
 
  select test_type, diagnosis_code.name as diagnosis, indicator_name, p_value
  from diagnosis_code inner join (
@@ -106,8 +107,9 @@ update consult_diagnosis
         where name = 'kidney failure') and produced_indicator.p_value > 1.0 and test_procedure.test_type = 'blood';
 
 /* VERIFICATION */
+select * from diagnosis_code where name = 'end-stage renal disease';
 
- select test_type, diagnosis_code.name as diagnosis, indicator_name, p_value
+select test_type, diagnosis_code.name as diagnosis, indicator_name, p_value
  from diagnosis_code inner join (
      consult_diagnosis inner join (
          consult inner join (
