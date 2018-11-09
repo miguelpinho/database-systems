@@ -40,7 +40,9 @@ select indicator.name, units, test_type, reference_value
 
 /* VERIFICATION */
 
-select person.name, count(client.VAT) as is_client from person left join client on client.VAT = person.VAT where person.name = 'John Smith' group by person.name;
+select person.name, count(client.VAT) as n_clients from person left join client on client.VAT = person.VAT where person.name = 'John Smith' group by person.name;
+
+select person.name, count(veterinary.VAT) as n_veterinaries from person left join veterinary on veterinary.VAT = person.VAT where person.name = 'John Smith' group by person.name;
 
 select person.name, count(animal.VAT) as n_animals from person left join animal on person.VAT = animal.VAT where person.name = 'John Smith' group by person.name;
 
@@ -55,7 +57,9 @@ delete from client
 
 /* VERIFICATION */
 
-select person.name, count(client.VAT) as is_client from person left join client on client.VAT = person.VAT where person.name = 'John Smith' group by person.name;
+select person.name, count(client.VAT) as n_clients from person left join client on client.VAT = person.VAT where person.name = 'John Smith' group by person.name;
+
+select person.name, count(veterinary.VAT) as n_veterinaries from person left join veterinary on veterinary.VAT = person.VAT where person.name = 'John Smith' group by person.name;
 
 select person.name, count(animal.VAT) as n_animals from person left join animal on person.VAT = animal.VAT where person.name = 'John Smith' group by person.name;
 
