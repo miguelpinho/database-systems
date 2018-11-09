@@ -3,13 +3,16 @@ create view dim_date as
     (select date_timestamp,DAY(date_timestamp) as day, MONTH(date_timestamp) as month,YEAR(date_timestamp) as year 
         from consult);
 
+/* VERIFICATION */
 select * 
     from dim_date;
+
 /* 2. */
 create view dim_animal as 
     (select name as animal_name, VAT as animal_vat, species_name as species, age as age from 
         animal);
 
+/* VERIFICATION */
 select * 
     from dim_animal;
 
@@ -24,5 +27,6 @@ create view facts_consults as
         on dim_date.date_timestamp = consult.date_timestamp
     group by dim_animal.animal_name, dim_animal.animal_vat, dim_date.date_timestamp);
 
+/* VERIFICATION */
 select * 
     from facts_consults;

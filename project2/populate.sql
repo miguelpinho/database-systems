@@ -331,7 +331,9 @@ VALUES ('Bailey', 15467, '2017-01-19 10:00:00', 5121),
 
 /*** consult diagnosis ***/
 INSERT INTO consult_diagnosis
-VALUES ('AAHA 1832', 'Hedwig', 12311, '2017-09-02 10:00:00');
+VALUES ('AAHA 1832', 'Hedwig', 12311, '2017-09-02 10:00:00'),
+        ('AAHA 3124', 'Hedwig', 12311, '2018-10-02 10:00:00'),
+        ('AAHA 3124', 'Hedwig', 12311, '2018-11-02 10:00:00');
 
 INSERT INTO consult_diagnosis
 VALUES ('AAHA 1412', 'Summer', 86137, '2017-03-03 15:00:00'),
@@ -396,12 +398,16 @@ VALUES ('AAHA 6731', 'Max', 15467, '2017-01-19 12:00:00', 'Buffout', 'VaultTec',
 INSERT INTO procedures
 VALUES ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'Complete blood analysis'),
        ('Hedwig', 12311, '2017-09-02 10:00:00', 2, 'Check them bones'),
+       ('Hedwig', 12311, '2018-10-02 10:00:00', 1, 'Complete blood analysis'),
+       ('Hedwig', 12311, '2018-11-02 10:00:00', 1, 'Complete blood analysis'),
        ('Hedwig', 12311, '2017-09-02 10:00:00', 3, 'Urine analysis'),
        ('Max', 15467, '2017-09-11 10:00:00', 1, 'Vampire test');
 
 INSERT INTO test_procedure
 VALUES ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'blood'),
        ('Hedwig', 12311, '2017-09-02 10:00:00', 3, 'urine'),
+       ('Hedwig', 12311, '2018-10-02 10:00:00', 1, 'blood'),
+       ('Hedwig', 12311, '2018-11-02 10:00:00', 1, 'blood'),
        ('Max', 15467, '2017-09-11 10:00:00', 1, 'blood');
 
 INSERT INTO radiography
@@ -411,6 +417,8 @@ INSERT INTO produced_indicator
 VALUES ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'hemoglobin', 140.0),
        ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'white blood cell count', 5.1),
        ('Hedwig', 12311, '2017-09-02 10:00:00', 1, 'creatine level', 0.4),
+       ('Hedwig', 12311, '2018-10-02 10:00:00', 1, 'white blood cell count', 1.4),
+       ('Hedwig', 12311, '2018-11-02 10:00:00', 1, 'creatine level', 1.4),
        ('Max', 15467, '2017-09-11 10:00:00', 1, 'mean cell volume', 110);
 
 
