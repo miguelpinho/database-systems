@@ -92,7 +92,7 @@ CREATE TABLE consult
      p VARCHAR(255),
      PRIMARY KEY(name, VAT_owner, date_timestamp),
      FOREIGN KEY(name, VAT_owner) REFERENCES animal(name, VAT) ON DELETE CASCADE,
-     FOREIGN KEY(VAT_client) REFERENCES client(VAT),
+     FOREIGN KEY(VAT_client) REFERENCES client(VAT) ON DELETE CASCADE,
      FOREIGN KEY(VAT_vet) REFERENCES veterinary(VAT),
      CHECK (weight > 0));
 
