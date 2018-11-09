@@ -38,8 +38,8 @@ select indicator.name, units, test_type, reference_value
             (name, VAT_owner, date_timestamp, num))
         on produced_indicator.indicator_name = indicator.name;
 
+/*** 3. ***/
 /* VERIFICATION */
-
 select person.name, count(client.VAT) as n_clients from person left join client on client.VAT = person.VAT where person.name = 'John Smith' group by person.name;
 
 select person.name, count(veterinary.VAT) as n_veterinaries from person left join veterinary on veterinary.VAT = person.VAT where person.name = 'John Smith' group by person.name;
@@ -48,7 +48,7 @@ select person.name, count(animal.VAT) as n_animals from person left join animal 
 
 select person.name, count(consult.name) as n_consults from person left join consult on consult.VAT_owner = VAT where person.name = 'John Smith' group by person.name;
 
-/* 3. */
+/* CHANGE */
 delete from client
     where VAT in
         (select VAT
@@ -56,7 +56,6 @@ delete from client
             where name = 'John Smith');
 
 /* VERIFICATION */
-
 select person.name, count(client.VAT) as n_clients from person left join client on client.VAT = person.VAT where person.name = 'John Smith' group by person.name;
 
 select person.name, count(veterinary.VAT) as n_veterinaries from person left join veterinary on veterinary.VAT = person.VAT where person.name = 'John Smith' group by person.name;
@@ -65,6 +64,8 @@ select person.name, count(animal.VAT) as n_animals from person left join animal 
 
 select person.name, count(consult.name) as n_consults from person left join consult on consult.VAT_owner = VAT where person.name = 'John Smith' group by person.name;
 
+
+/*** 4. ***/
 /* VERIFICATION */
 select * from diagnosis_code where name = 'end-stage renal disease';
 
@@ -79,7 +80,7 @@ select * from diagnosis_code where name = 'end-stage renal disease';
     using(name, VAT_owner, date_timestamp))
 on diagnosis_code.code = consult_diagnosis.code;
 
-/* 4. */
+/* CHANGE */
 select code
 from diagnosis_code
     where name = 'kidney failure';
