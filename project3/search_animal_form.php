@@ -6,7 +6,7 @@
         </p>
         <p>Owner Name:
             <input type="text" name="owner_name"/>
-        </p>
+        </p>  
         <p>Animal Name:
             <input type="text" name="animal_name"/>
         </p>

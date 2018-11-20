@@ -33,7 +33,12 @@
                     echo("<tr>");                     
                     echo("<td>{$row['animals_name']}</td>");
                     echo("<td>{$row['owner_vat']}</td>");
-                    echo("<td>{$row['owner_name']}</td>");                                    
+                    echo("<td>{$row['owner_name']}</td>");
+                    echo("<td><a href=\"animal_consults.php?animal_name=");
+                    echo($row['animals_name']);
+                    echo("&owner_vat=");  
+                    echo($row['owner_vat']);
+                    echo("\">See Medical Record</a></td>\n");                               
                     echo("</tr>\n");   
             }  
             echo("</table>");  
@@ -72,59 +77,14 @@
                 </form>");
            
         }
+        $connection = null;
         ?>
         
         
-        <?php
-
-        $sql="SELECT consult.name as animal_name, consult.VAT_owner as VAT_owner, owner.name as owner_name, client.name as client_name, consult.VAT_client as VAT_client, consult.date_timestamp as date_time 
-            FROM consult INNER JOIN person AS owner 
-                ON consult.VAT_owner=owner.VAT 
-            INNER JOIN person AS client 
-                ON consult.VAT_client=client.VAT 
-            WHERE consult.name LIKE '%$animal_name%' AND owner.name LIKE '%$owner_name%'";
-        $result = $connection->query($sql);
-        $rows = $result->fetchAll();
-        $num_rows = count($rows);
-
-        if($num_rows<1){
-            echo("<p>There are no consults</p>");
-
-        }
-        else
-        {
-            echo("<p>There are: $num_rows different consults</p>");
-
-            echo("<h2>Consults envolve these animals:</h2>");
-            echo("<table border=\"1\">
-                <tr>
-                <td><em>animal name</em></td>
-                <td><em>VAT_owner</em></td>
-                <td><em>Owner name</em></td>
-                <td><em>VAT_client</em></td>
-                <td><em>Cliente name</em></td>
-                <td><em>Date</em></td>
-                </tr>"
-            );
-
-            foreach($rows as $row)
-            {           
-                    echo("<tr>");                     
-                    echo("<td>{$row['animal_name']}</td>");
-                    echo("<td>{$row['VAT_owner']}</td>");
-                    echo("<td>{$row['owner_name']}</td>");
-                    echo("<td>{$row['VAT_client']}</td>");
-                    echo("<td>{$row['client_name']}</td>");
-                    echo("<td>{$row['date_time']}</td>");                    
-                    echo("</tr>\n");                    
-                
-            }  
-            echo("</table>"); 
-        }
-
-        $connection = null;
         
-?>
+       
+        
+
         
 </body>
 </html>
