@@ -1,6 +1,5 @@
 <html>
-<body>
-    
+<body>    
     <?php
         $VAT_client = (integer)$_REQUEST['VAT_client'];
         $owner_name = $_REQUEST['owner_name'];
@@ -37,7 +36,10 @@
                     echo("<td>{$row['owner_name']}</td>");                                    
                     echo("</tr>\n");   
             }  
-            echo("</table>");   
+            echo("</table>");  
+            echo("<form action='search_animal_form.php' method='post'> 
+             <input type='submit' value='Go To Homepage'/>           
+        </form>"); 
         }
         else
         {
