@@ -12,13 +12,46 @@
         $dsn = "mysql:host=$host;dbname=$user";
         $connection = new PDO($dsn, $user, $pass);    
 
+        $stmt = $connection->prepare("SELECT * FROM person WHERE VAT =:VAT");
+        $stmt ->execute([
+            'VAT' => $VAT_client,
+        ]);
+
+        echo("<table style=\"margin-bottom: 20px;\">");
+        foreach($stmt as $client)
+        {
+            echo("<tr>");                     
+            echo("<td>{$client['VAT']}</td>");
+            echo("<td>{$client['name']}</td>");
+            echo("<td>{$client['address_street']}</td>");
+            echo("<td>{$client['address_city']}</td>");
+            echo("<td>{$client['address_zip']}</td>");                                         
+            echo("</tr>\n");  
+        }
+        echo("</table>");
+
+
+        /*
         $sql="SELECT distinct animal.name as animals_name, animal.VAT as owner_vat, person.name as owner_name 
             FROM animal, person 
             WHERE person.VAT=animal.VAT AND  animal.name LIKE '%$animal_name%' AND person.name LIKE '%$owner_name%'";
         $result = $connection->query($sql);
         $rows = $result->fetchAll(); 
         $num_rows = count($rows);
-
+        */
+        /*echo("$owner_name");*/
+        $stmt = $connection->prepare("SELECT distinct animal.name as animals_name, animal.VAT as owner_vat, person.name as owner_name 
+        FROM animal, person 
+        WHERE person.VAT=animal.VAT AND  animal.name= :animal_name AND person.name LIKE CONCAT('%',:owner_name,'%')");
+        $stmt ->execute([
+            'animal_name' => $animal_name,
+            'owner_name' => $owner_name,
+        ]);
+        
+        $result =$stmt->fetchAll();
+        $num_rows = count($result);
+        echo("Animals=$num_rows");
+          
         if($num_rows > 0)
         {
             echo("<table border=\"1\">
@@ -28,7 +61,7 @@
                     <td><em>Owner name</em></td>                
                     </tr>"
                 );
-            foreach($rows as $row)
+            foreach($result as $row)
             {           
                     echo("<tr>");                     
                     echo("<td>{$row['animals_name']}</td>");
@@ -53,8 +86,8 @@
                     <p>Name:
                         <input type='text' name='animal_name'/>
                     </p>
-                    <p>VAT:
-                        <input type='text' name='VAT_owner'/>
+                    <p>
+                        <input type='hidden' name='VAT_owner' value='$VAT_client'/>
                     </p>
                     <p>Species Name:
                         <input type='text' name='species_name'/>
