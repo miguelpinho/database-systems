@@ -1,6 +1,6 @@
 <html>
 <body>
-<h1>Animal consults: <?=$_REQUEST['animal_name']?>:</h1>
+<h1>Animal consults: <?=$_REQUEST['animal_name']?></h1>
 <?php
 
         $host = "db.ist.utl.pt";
@@ -23,7 +23,7 @@
         $animal_name=$_REQUEST['animal_name'];
         $owner_VAT=(integer)$_REQUEST['owner_vat'];
         echo("$owner_VAT, $animal_name");
-        $sql=" SELECT * from consult WHERE consult.name LIKE '%$animal_name%' AND consult.VAT_owner=$owner_VAT";
+        $sql=" SELECT * from consult WHERE consult.name='$animal_name' AND consult.VAT_owner=$owner_VAT";
         $result = $connection->query($sql);
         if ($result == FALSE)
         {
@@ -45,37 +45,38 @@
             echo("<h2>Consults envolve these animals:</h2>");
             echo("<table border=\"1\">
                 <tr>
-                <td><em>animal name</em></td>
-                <td><em>VAT_owner</em></td>
+                
+                <td><em>No.</em></td>
                 <td><em>Date</em></td>
                 <td><em>VAT_client</em></td>
                 <td><em>VAT_vet</em></td>
-                <td><em>Weight</em></td>
-                <td><em>S</em></td>
-                <td><em>O</em></td>
-                <td><em>A</em></td>  
-                <td><em>P</em></td>
+                
                 </tr>"
             );
-
+            $aux=1;
             foreach($rows as $row)
             {           
                     echo("<tr>");                     
-                    echo("<td>{$row['name']}</td>");
-                    echo("<td>{$row['VAT_owner']}</td>");
+                   
+                    echo("<td>$aux</td>");
                     echo("<td>{$row['date_timestamp']}</td>");
                     echo("<td>{$row['VAT_client']}</td>");
                     echo("<td>{$row['VAT_vet']}</td>");
-                    echo("<td>{$row['weight']}</td>");
-                    echo("<td>{$row['s']}</td>");
-                    echo("<td>{$row['o']}</td>");
-                    echo("<td>{$row['a']}</td>");
-                    echo("<td>{$row['p']}</td>");                                      
-                    echo("</tr>\n");                    
+                    echo("<td><a href=\"consult_info.php?animal_name=");
+                    echo($row['name']);
+                    echo("&date=");  
+                    echo($row['date_timestamp']);
+                    echo("&owner_vat=");  
+                    echo($row['VAT_owner']);
+                    echo("\">More info</a></td>\n");                                                   
+                    echo("</tr>\n");      
+                    $aux++;              
                 
             }  
             echo("</table>"); 
         }
+        $connection = null;
+
         ?>
 
 </body>
