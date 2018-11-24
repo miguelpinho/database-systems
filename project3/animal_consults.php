@@ -77,7 +77,16 @@
         }
         $connection = null;
 
-        ?>
-
+        
+    echo("<a style=\" margin-top:20px;\" href=\"new_consult.php?animal_name=");
+    echo($row['name']);
+    echo("&owner_vat=");  
+    echo($row['VAT_owner']);
+    echo("&client_vat=");  
+    echo($_REQUEST['VAT_client']); 
+    echo("\"><button style=\" margin-top:20px;\">Add new consult</button></a>\n");  
+    
+    ?>
 </body>
+       
 </html>

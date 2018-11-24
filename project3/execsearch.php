@@ -71,6 +71,8 @@
                     echo($row['animals_name']);
                     echo("&owner_vat=");  
                     echo($row['owner_vat']);
+                    echo("&VAT_client=");  
+                    echo($VAT_client);
                     echo("\">See Medical Record</a></td>\n");                               
                     echo("</tr>\n");   
             }  
