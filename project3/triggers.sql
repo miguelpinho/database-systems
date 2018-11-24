@@ -1,6 +1,7 @@
 DROP TRIGGER IF EXISTS animal_age;
 DROP TRIGGER IF EXISTS already_assistant;
 DROP TRIGGER IF EXISTS already_vet;
+DROP TRIGGER IF EXISTS phone_not_unique;
 
 delimiter $$
 
@@ -34,5 +35,16 @@ BEGIN
     END IF;
 END$$
 
+/* 3. ensure a phone_number is unique */
+/* if needs to check it is a different person, just add VAT <> new.VAT */
+CREATE TRIGGER phone_not_unique BEFORE INSERT ON phone_number
+FOR EACH ROW
+BEGIN
+    DECLARE msg VARCHAR(255);
+    IF EXISTS (SELECT phone_number.phone FROM phone_number WHERE phone_number.phone = new.phone) THEN
+        SET msg = "IC: someone already has this phone number.";
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+    END IF;
+END$$
 
 delimiter ;
