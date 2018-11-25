@@ -3,15 +3,9 @@
     <?php
         $date=$_REQUEST['date'];
         echo($date);
-
-        
-        $codes=$_REQUEST['codes'];
-        foreach($codes as $code){
-            echo($code);
-        }
-        echo("$codes");
-            $codes=$_REQUEST['p'];
-            echo("$codes");
+        $num_codes = $_REQUEST['num_codes'];
+        echo($num_codes);
+       
 
     ?>
 </body>
