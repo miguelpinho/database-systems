@@ -55,7 +55,7 @@
         echo($owner_vat);
         echo("&client_vat=");  
         echo($client_vat); 
-        echo("\"><button style=\" margin-top:20px;\">Back to animal consults</button></a>\n");
+        echo("\"><button style=\" margin-top:20px;\">Back to animal consults</button></a>\n");        
 
     ?>
 </body>
