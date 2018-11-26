@@ -10,7 +10,7 @@ CREATE TRIGGER animal_age AFTER INSERT ON consult
 FOR EACH ROW
 BEGIN
     UPDATE animal
-    SET age = TIMESTAMPDIFF(YEAR, birth_year, NOW())
+    SET age = TIMESTAMPDIFF(YEAR, birth_year, NOW()), name = name, VAT = VAT, species_name = species_name,colour = colour, gender = gender, birth_year = birth_year
     WHERE name = new.name AND VAT = new.VAT_owner;
 END$$
 
