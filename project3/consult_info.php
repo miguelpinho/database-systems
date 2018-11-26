@@ -121,6 +121,31 @@
     
    
     <?php
+    $stmt= $connection->prepare("SELECT code from consult_diagnosis WHERE name=:name AND VAT_owner=:vat_owner AND date_timestamp=:date");
+    $stmt->bindParam('name',$animal_name);
+    $stmt->bindParam(':vat_owner', $vat_owner);
+    $stmt->bindParam(':date', $date);
+    $result=$stmt->execute();
+    if ($result == FALSE)
+    {
+        $info = $connection->errorInfo();
+        echo("<p>Error: {$info[2]}</p>");
+        exit();
+    }
+    $d_codes =$stmt->fetchAll();
+
+    if(count($d_codes)>0)
+    {
+        echo("<ul style=\"padding-left: 0;\" ><h3>Diagnostic codes:</h3>");
+        foreach($d_codes as $d_code)
+        {
+            echo("<li>-{$d_code['code']}</li>");
+        }
+        echo("</ul>");
+    }
+
+
+
     $sql="SELECT code, name_med, lab, dosage, regime FROM prescription WHERE name='$animal_name' AND VAT_owner=$vat_owner AND date_timestamp='$date'";
     $result = $connection->query($sql);
     if ($result == FALSE)

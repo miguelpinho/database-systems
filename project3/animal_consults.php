@@ -40,7 +40,7 @@
         }
         else
         {
-            echo("<p>There are: $num_rows different consults</p>");
+            echo("<p>There are $num_rows different consults</p>");
 
             echo("<h2>Consults envolve these animals:</h2>");
             echo("<table border=\"1\">
@@ -83,7 +83,7 @@
     echo("&owner_vat=");  
     echo($row['VAT_owner']);
     echo("&client_vat=");  
-    echo($_REQUEST['VAT_client']); 
+    echo($_REQUEST['client_vat']); 
     echo("\"><button style=\" margin-top:20px;\">Add new consult</button></a>\n");  
     
     ?>

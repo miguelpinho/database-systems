@@ -34,7 +34,7 @@
             exit();
         }
         $connection->commit();
-        $connection = null;
+        
         /*
         $stmt ->execute([
             'name' => $animal_name,
@@ -48,7 +48,22 @@
             'vet_vat' => $vet_vat,
             'weight' =>$weight,
         ]);*/
-
+        
+        $stmt=$connection->prepare("INSERT INTO consult_diagnosis (code, name, VAT_owner, date_timestamp)
+                                        values (:code, :name, :vat_owner, :date)");
+        $stmt->bindParam(':code', $_REQUEST['1']);
+        $stmt->bindParam(':name', $animal_name);
+        $stmt->bindParam(':vat_owner', $owner_vat);
+        $stmt->bindParam(':date', $date);
+        $result=$stmt->execute();
+        if ($result == FALSE)
+        {
+            $info = $connection->errorInfo();
+            echo("<p>Error: {$info[2]}</p>");
+            exit();
+        }
+        
+        $connection = null;
         echo("<a style=\" margin-top:20px;\" href=\"animal_consults.php?animal_name=");
         echo($animal_name);
         echo("&owner_vat=");  
