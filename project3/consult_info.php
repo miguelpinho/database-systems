@@ -136,10 +136,11 @@
 
     if(count($d_codes)>0)
     {
-        echo("<ul style=\"padding-left: 0;\" ><h3>Diagnostic codes:</h3>");
+        echo("<h3>Diagnostic codes:</h3>");
+        echo("<ul style=\"padding-left: 0\" >"); 
         foreach($d_codes as $d_code)
         {
-            echo("<li>-{$d_code['code']}</li>");
+            echo("<li>{$d_code['code']}</li>");
         }
         echo("</ul>");
     }
