@@ -18,11 +18,11 @@ END$$
 /* 5. change milligrams to centigrams */
 CREATE PROCEDURE to_centigrams()
 BEGIN
-    /* UPDATE produced_indicator AS M */
-    /* INNER JOIN indicator AS I */
-    /* ON M.indicator_name = I.name */
-    /* SET p_value = p_value / 10.0 */
-    /* WHERE units = "milligrams"; */
+    UPDATE produced_indicator AS M
+    INNER JOIN indicator AS I
+    ON M.indicator_name = I.name
+    SET p_value = p_value / 10.0 , M.name = M.name, M.VAT_owner = M.VAT_owner , M.date_timestamp = M.date_timestamp , M.num = M.num , M.indicator_name = M.indicator_name
+    WHERE units = "milligrams";
 
     UPDATE indicator
     SET units = "centigrams", reference_value = reference_value / 10.0
