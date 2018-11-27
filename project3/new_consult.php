@@ -11,11 +11,46 @@
     <form id="myForm" action='add_consult.php?animal_name=<?=$animal_name?>&owner_vat=<?=$vat_owner?>&client_vat=<?=$vat_client?>&num_codes=' method="post">
         <h4>Identification</h4>
         <p>Veterinary  VAT:
-            <input type="text" name="vet_vat"/>
+            <select name="vet_vat">
+            <?php
+            $host = "db.ist.utl.pt";
+            $user = "ist425321";
+            $pass = "mknc9851";
+            $dsn = "mysql:host=$host;dbname=$user";
+            try
+            {
+                $connection = new PDO($dsn, $user, $pass);
+            }
+            catch(PDOException $exception)
+            {
+                echo("<p>Error: ");
+                echo($exception->getMessage());
+                echo("</p>");
+                exit();
+            }
+
+            $sql = "SELECT VAT FROM veterinary";
+            $result = $connection->query($sql);
+            if ($result == FALSE)
+            {
+                $info = $connection->errorInfo();
+                echo("<p>Error: {$info[2]}</p>");
+                exit();
+            }
+
+            foreach($result as $row)
+            {
+                $vat = $row['VAT'];
+                echo("<option value=\"$vat\">$vat</option>");
+            }
+
+            $connection = null;
+            ?>
+            </select>
         </p>
         <p>Animal weight:
             <input type="text" name="weight"/>
-        </p> 
+        </p>
         <p>
             <input type='hidden' name='date' value='<?=date("Y-m-d H:i:s") ?>'/>
         </p>
@@ -38,11 +73,46 @@
         </p>
         <div id="myDIV" >
             <h4 style="margin:5px">Diagnosis Codes</h4>
-            <input type="text" id="myInput" placeholder="Code...">
+            <select id="myInput">
+            <?php
+            $host = "db.ist.utl.pt";
+            $user = "ist425321";
+            $pass = "mknc9851";
+            $dsn = "mysql:host=$host;dbname=$user";
+            try
+            {
+                $connection = new PDO($dsn, $user, $pass);
+            }
+            catch(PDOException $exception)
+            {
+                echo("<p>Error: ");
+                echo($exception->getMessage());
+                echo("</p>");
+                exit();
+            }
+
+            $sql = "SELECT code FROM diagnosis_code";
+            $result = $connection->query($sql);
+            if ($result == FALSE)
+            {
+                $info = $connection->errorInfo();
+                echo("<p>Error: {$info[2]}</p>");
+                exit();
+            }
+
+            foreach($result as $row)
+            {
+                $code = $row['code'];
+                echo("<option value=\"$code\">$code</option>");
+            }
+
+            $connection = null;
+            ?>
+            </select>
             <span onclick="newElement()" >Add</span>
         </div>
 
-        <ul id="mycodes">                   
+        <ul id="mycodes">
         </ul>
 
         <script>
@@ -53,32 +123,32 @@
                 var li = document.createElement("li");
                 var input = document.createElement("input");
                 var inputValue = document.getElementById("myInput").value;
-                var t = document.createTextNode(inputValue);                
+                var t = document.createTextNode(inputValue);
                 li.appendChild(t);
-                
+
                 if (inputValue === '') {
                     alert("You must write something!");
                 } else {
-                	num_codes++;
+                    num_codes++;
                     input.setAttribute("type", "hidden");
-                    input.setAttribute("value", inputValue);    
+                    input.setAttribute("value", inputValue);
                     input.setAttribute("name", num_codes);
-                   
+
                     document.getElementById("mycodes").appendChild(li);
                     document.getElementById("mycodes").appendChild(input);
                 }
-                document.getElementById("myInput").value = ""; 
+                document.getElementById("myInput").value = "";
             };
             function myFunction(){
-                var x = document.getElementById("myForm").action;                
-                var z=x+num_codes;               
+                var x = document.getElementById("myForm").action;
+                var z=x+num_codes;
                 document.getElementById("myForm").action=z;
             }
-            
+
         </script>
-            
+
         <p><input onclick="myFunction()" type="submit" value="Submit"/></p>
     </form>
-    
+
 </body>
 </html>
