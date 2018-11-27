@@ -73,7 +73,7 @@
         </p>
         <div id="myDIV" >
             <h4 style="margin:5px">Diagnosis Codes</h4>
-            <select id="myInput">
+            <!-- <select id="myInput" > -->
             <?php
             $host = "db.ist.utl.pt";
             $user = "ist425321";
@@ -103,18 +103,18 @@
             foreach($result as $row)
             {
                 $code = $row['code'];
-                echo("<option value=\"$code\">$code</option>");
+                
+                echo("<input style=\"margin-left: 20px\" type=\"checkbox\"  name=\"codes[$code]\" value=\"$code\"> $code<br>");
+                /*echo("<option value=\"$code\">$code</option>");*/
             }
 
             $connection = null;
             ?>
-            </select>
-            <span onclick="newElement()" >Add</span>
+            
         </div>
 
-        <ul id="mycodes">
-        </ul>
-
+        
+    
         <script>
         // Create a new list item when clicking on the "Add" button
         var num_codes=0;
