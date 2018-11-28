@@ -24,6 +24,7 @@
         $owner_VAT=(integer)$_REQUEST['owner_vat'];
         echo("$owner_VAT, $animal_name");
         $sql=" SELECT * from consult WHERE consult.name='$animal_name' AND consult.VAT_owner=$owner_VAT";
+        
         $result = $connection->query($sql);
         if ($result == FALSE)
         {
