@@ -41,6 +41,7 @@
         {
             foreach($clients as $client)
             {
+                echo("<h4>Client:</h4>");
                 echo("<table style=\"margin-bottom: 20px;\">");        
                 echo("<tr>");                     
                 echo("<td>{$client['VAT']}</td>");
@@ -54,6 +55,9 @@
         }else
         {
             echo("<p>Client not found</p>\n");
+            echo("<form action='search_animal_form.php' method='post'> 
+            <input type='submit' value='Go To Homepage'/>           
+            </form>");
         }
         /*
         $sql="SELECT distinct animal.name as animals_name, animal.VAT as owner_vat, person.name as owner_name 
@@ -84,8 +88,9 @@
         $result =$stmt->fetchAll();
         $num_rows = count($result);
                   
-        if($num_rows > 0)
+        if($num_rows > 0 && count($clients)>0)
         {
+            echo("<h4>Animals:</h4>");
             echo("<table border=\"1\">
                     <tr>
                     <td><em>animal name</em></td>
@@ -113,9 +118,10 @@
              <input type='submit' value='Go To Homepage'/>           
         </form>"); 
         }
-        else
+        elseif(count($clients)>0)
         {
             echo("<h3>No animal found</h3>\n");
+            echo("<h2>Add animal:</h2>\n");
             echo("<form action='search_animal_form.php' method='post'> 
             <input type='submit' value='Go To Homepage'/>           
             </form>"); 
