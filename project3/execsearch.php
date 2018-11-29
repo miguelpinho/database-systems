@@ -4,33 +4,61 @@
         $VAT_client = (integer)$_REQUEST['VAT_client'];
         $owner_name = $_REQUEST['owner_name'];
         $animal_name = $_REQUEST['animal_name'];
-        echo("$VAT_client, $owner_name, $animal_name");    
+           
     
         $host = "db.ist.utl.pt";
         $user = "ist425321";
         $pass = "mknc9851";
         $dsn = "mysql:host=$host;dbname=$user";
-        $connection = new PDO($dsn, $user, $pass);    
+                
+        try
+        {
+            $connection = new PDO($dsn, $user, $pass);
+        }
+        catch(PDOException $exception)
+        {
+            echo("<p>Error: ");
+            echo($exception->getMessage());
+            echo("</p>");
+            exit();
+        }
 
         $stmt = $connection->prepare("SELECT * FROM person WHERE VAT =:VAT");
-        $stmt ->execute([
+        $result=$stmt ->execute([
             'VAT' => $VAT_client,
-        ]);
+        ]);   
 
-        echo("<table style=\"margin-bottom: 20px;\">");
-        foreach($stmt as $client)
+        if ($result== FALSE)
         {
-            echo("<tr>");                     
-            echo("<td>{$client['VAT']}</td>");
-            echo("<td>{$client['name']}</td>");
-            echo("<td>{$client['address_street']}</td>");
-            echo("<td>{$client['address_city']}</td>");
-            echo("<td>{$client['address_zip']}</td>");                                         
-            echo("</tr>\n");  
+            echo("Client search query");
+            $info = $connection->errorInfo();
+            echo("<p>Error: {$info[2]}</p>");
+            exit();
         }
-        echo("</table>");
+        $clients=$stmt->fetchAll();
 
-
+        if(count($clients)>0)
+        {
+            foreach($clients as $client)
+            {
+                echo("<h4>Client:</h4>");
+                echo("<table style=\"margin-bottom: 20px;\">");        
+                echo("<tr>");                     
+                echo("<td>{$client['VAT']}</td>");
+                echo("<td>{$client['name']}</td>");
+                echo("<td>{$client['address_street']}</td>");
+                echo("<td>{$client['address_city']}</td>");
+                echo("<td>{$client['address_zip']}</td>");                                     
+                echo("</tr>\n"); 
+                echo("</table>");
+            }
+        }else
+        {
+            echo("<p>Client not found</p>\n");
+            echo("<form action='search_animal_form.php' method='post'> 
+            <input type='submit' value='Go To Homepage'/>           
+            </form>");
+        }
         /*
         $sql="SELECT distinct animal.name as animals_name, animal.VAT as owner_vat, person.name as owner_name 
             FROM animal, person 
@@ -40,20 +68,29 @@
         $num_rows = count($rows);
         */
         /*echo("$owner_name");*/
+
         $stmt = $connection->prepare("SELECT distinct animal.name as animals_name, animal.VAT as owner_vat, person.name as owner_name 
         FROM animal, person 
         WHERE person.VAT=animal.VAT AND  animal.name= :animal_name AND person.name LIKE CONCAT('%',:owner_name,'%')");
-        $stmt ->execute([
+        $result=$stmt ->execute([
             'animal_name' => $animal_name,
             'owner_name' => $owner_name,
         ]);
-        
+
+        if ($result== FALSE)
+        {
+            echo("Animal search query");
+            $info = $connection->errorInfo();
+            echo("<p>Error: {$info[2]}</p>");
+            exit();
+        }
+
         $result =$stmt->fetchAll();
         $num_rows = count($result);
-        echo("Animals=$num_rows");
-          
-        if($num_rows > 0)
+                  
+        if($num_rows > 0 && count($clients)>0)
         {
+            echo("<h4>Animals:</h4>");
             echo("<table border=\"1\">
                     <tr>
                     <td><em>animal name</em></td>
@@ -81,9 +118,13 @@
              <input type='submit' value='Go To Homepage'/>           
         </form>"); 
         }
-        else
+        elseif(count($clients)>0)
         {
             echo("<h3>No animal found</h3>\n");
+            echo("<h2>Add animal:</h2>\n");
+            echo("<form action='search_animal_form.php' method='post'> 
+            <input type='submit' value='Go To Homepage'/>           
+            </form>"); 
             echo("<form action='create_animal.php' method='post'>
                     <p>Name:
                         <input type='text' name='animal_name'/>
