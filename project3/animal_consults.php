@@ -1,6 +1,6 @@
 <html>
 <body>
-<h1>Animal consults: <?=$_REQUEST['animal_name']?></h1>
+<h1><?=$_REQUEST['animal_name']?> consults:</h1>
 <?php
 
         $host = "db.ist.utl.pt";
@@ -23,16 +23,20 @@
         $animal_name=$_REQUEST['animal_name'];
         $owner_VAT=(integer)$_REQUEST['owner_vat'];
         echo("$owner_VAT, $animal_name");
-        $sql=" SELECT * from consult WHERE consult.name='$animal_name' AND consult.VAT_owner=$owner_VAT";
-        
-        $result = $connection->query($sql);
+        $stmt=$connection->prepare(" SELECT * from consult WHERE consult.name=:name AND consult.VAT_owner=:vat_owner");
+        $stmt->bindParam('name',$animal_name);
+        $stmt->bindParam(':vat_owner', $owner_VAT);
+        $result=$stmt->execute();
         if ($result == FALSE)
         {
+            echo("Query animal consults");
             $info = $connection->errorInfo();
             echo("<p>Error: {$info[2]}</p>");
             exit();
         }
-        $rows = $result->fetchAll();
+        
+        
+        $rows = $stmt->fetchAll();
         $num_rows = count($rows);
 
         if($num_rows<1){
@@ -88,6 +92,7 @@
     echo("\"><button style=\" margin-top:20px;\">Add new consult</button></a>\n");  
     
     ?>
+    <button onclick="history.go(-1);">Back to animals list </button>
 </body>
        
 </html>
