@@ -118,8 +118,19 @@
              <input type='submit' value='Go To Homepage'/>           
         </form>"); 
         }
-        elseif(count($clients)>0)
+        elseif(count($clients)>0)        
         {
+            $sql = "SELECT name FROM species";
+            $species = $connection->query($sql);
+            if ($species == FALSE)
+            {
+                $info = $connection->errorInfo();
+                echo("<p>Error: {$info[2]}</p>");
+                exit();
+            }
+
+           
+
             echo("<h3>No animal found</h3>\n");
             echo("<h2>Add animal:</h2>\n");
             echo("<form action='search_animal_form.php' method='post'> 
@@ -131,10 +142,19 @@
                     </p>
                     <p>
                         <input type='hidden' name='VAT_owner' value='$VAT_client'/>
-                    </p>
-                    <p>Species Name:
-                        <input type='text' name='species_name'/>
-                    </p>
+                    </p>");
+
+            echo("<p>Species Name:
+                        <select name=\"species_name\">");
+                        foreach($species as $row)
+                        {
+                            $specie = $row['name'];
+                            echo("<option value=\"$specie\">$specie</option>");
+                        }
+            echo("</select>
+                </p>");
+            
+            echo("
                     <p>Animal Color:
                         <input type='text' name='animal_color'/>
                     </p>
