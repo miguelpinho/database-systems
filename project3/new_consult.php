@@ -49,7 +49,7 @@
             </select>
         </p>
         <p>Animal weight:
-            <input type="text" name="weight"/>
+            <input type="number" min="0" step="0.001" max="999.999" type="text" name="weight" required/>
         </p>
         <p>
             <input type='hidden' name='date' value='<?=date("Y-m-d H:i:s") ?>'/>
@@ -57,19 +57,19 @@
         <h4>Consult notes</h4>
         <p>
             <p>S:</p>
-            <textarea name="s" rows="3" cols="40"></textarea>
+            <textarea name="s" rows="3" cols="40" required></textarea>
         </p>
         <p>
             <p>O:</p>
-            <textarea name="o" rows="3" cols="40"></textarea>
+            <textarea name="o" rows="3" cols="40" required></textarea>
         </p>
         <p>
             <p>A:</p>
-            <textarea name="a" rows="3" cols="40"></textarea>
+            <textarea name="a" rows="3" cols="40" required></textarea>
         </p>
         <p>
             <p>P:</p>
-            <textarea name="p" rows="3" cols="40"></textarea>
+            <textarea name="p" rows="3" cols="40" required></textarea>
         </p>
         <p id="myDIV" >
             <h4 style="margin:5px">Diagnosis Codes</h4>

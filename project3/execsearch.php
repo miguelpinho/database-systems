@@ -4,7 +4,7 @@
         $VAT_client = (integer)$_REQUEST['VAT_client'];
         $owner_name = $_REQUEST['owner_name'];
         $animal_name = $_REQUEST['animal_name'];
-           
+           echo("$VAT_client, $owner_name, $animal_name ");
     
         $host = "db.ist.utl.pt";
         $user = "ist181702";
@@ -108,6 +108,8 @@
                     echo($row['animals_name']);
                     echo("&owner_vat=");  
                     echo($row['owner_vat']);
+                    echo("&owner_name=");  
+                    echo($owner_name);
                     echo("&client_vat=");  
                     echo($VAT_client);
                     echo("\">See Medical Record</a></td>\n");                               
@@ -138,9 +140,9 @@
             </form>"); 
             echo("<form action='create_animal.php' method='post'>
                     <p>Name:
-                        <input type='text' name='animal_name'/>
+                        <input type='text' name='animal_name' required/>
                     </p>
-                    <p>
+                    <p> VAT Owner: $VAT_client
                         <input type='hidden' name='VAT_owner' value='$VAT_client'/>
                     </p>");
 
