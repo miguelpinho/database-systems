@@ -14,8 +14,8 @@
         echo("$VAT_owner, $animal_name, $species_name, $animal_color, $animal_gender, $animal_birth_year, $animal_age");    
     
         $host = "db.ist.utl.pt";
-        $user = "ist425321";
-        $pass = "mknc9851";
+        $user = "ist181702";
+        $pass = "nqit9741";
         $dsn = "mysql:host=$host;dbname=$user";
         
         try

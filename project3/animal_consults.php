@@ -4,8 +4,8 @@
 <?php
 
         $host = "db.ist.utl.pt";
-        $user = "ist425321";
-        $pass = "mknc9851";
+        $user = "ist181702";
+        $pass = "nqit9741";
         $dsn = "mysql:host=$host;dbname=$user";
         
         try
@@ -73,7 +73,14 @@
                     echo($row['date_timestamp']);
                     echo("&owner_vat=");  
                     echo($row['VAT_owner']);
-                    echo("\">More info</a></td>\n");                                                   
+                    echo("\">More info</a></td>\n");
+                    echo("<td><a href=\"add_bt_form.php?animal_name=");
+                    echo($row['name']);
+                    echo("&date=");  
+                    echo($row['date_timestamp']);
+                    echo("&owner_vat=");  
+                    echo($row['VAT_owner']);
+                    echo("\">Add Blood Test</a></td>\n");                                                    
                     echo("</tr>\n");      
                     $aux++;              
                 

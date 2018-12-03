@@ -13,8 +13,8 @@
          $p=$_REQUEST['p'];
 
          $host = "db.ist.utl.pt";
-         $user = "ist425321";
-         $pass = "mknc9851";
+         $user = "ist181702";
+         $pass = "nqit9741";
          $dsn = "mysql:host=$host;dbname=$user";
          try
          {
