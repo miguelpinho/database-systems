@@ -2,8 +2,9 @@ DROP TRIGGER IF EXISTS animal_age;
 DROP TRIGGER IF EXISTS ins_vet;
 DROP TRIGGER IF EXISTS upd_vet;
 DROP TRIGGER IF EXISTS ins_assistant;
-DROP TRIGGER IF EXISTS upd_update;
-DROP TRIGGER IF EXISTS phone_not_unique;
+DROP TRIGGER IF EXISTS upd_assistant;
+DROP TRIGGER IF EXISTS ins_phone;
+DROP TRIGGER IF EXISTS upd_phone;
 
 delimiter $$
 
@@ -11,8 +12,14 @@ delimiter $$
 CREATE TRIGGER animal_age AFTER INSERT ON consult
 FOR EACH ROW
 BEGIN
+    DECLARE most_recent TIMESTAMP;
+
+    SELECT MAX(date_timestamp) INTO most_recent
+    FROM consult
+    WHERE name = new.name AND VAT_owner = new.VAT_owner;
+
     UPDATE animal
-    SET age = TIMESTAMPDIFF(YEAR, birth_year, NOW()), name = name,
+    SET age = TIMESTAMPDIFF(YEAR, birth_year, most_recent), name = name,
         VAT = VAT, species_name = species_name,colour = colour,
         gender = gender, birth_year = birth_year
     WHERE name = new.name AND VAT = new.VAT_owner;

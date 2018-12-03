@@ -12,6 +12,13 @@ VALUES ('Joshua', 15467, '2017-01-01 10:10:10', 12311, 4581,
 SELECT age AS new_age FROM animal
 WHERE name = 'Joshua' AND VAT = 15467;
 
+INSERT INTO consult
+VALUES ('Joshua', 15467, '2016-01-01 10:10:10', 12311, 4581,
+        17.2, 's', 'o', 'a', 'p');
+
+SELECT age AS new_age FROM animal
+WHERE name = 'Joshua' AND VAT = 15467;
+
 
 /* 2. Test if a vet is allowed to be an assitant... */
 INSERT INTO assistant VALUES (1010);
