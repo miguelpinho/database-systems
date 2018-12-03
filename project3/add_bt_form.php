@@ -70,6 +70,9 @@
         </p>
             <input type="hidden" name="owner_vat" value='<?=$vat_owner?>' required/>
         </p>
+        </p>
+            <input type="hidden" name="client_vat" value='<?=$_REQUEST['client_vat']?>'/>
+        </p>
         <p><input type="submit" value="Add"/></p>
         </form>
 

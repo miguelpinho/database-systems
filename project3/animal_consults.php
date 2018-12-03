@@ -80,6 +80,8 @@
                     echo($row['date_timestamp']);
                     echo("&owner_vat=");  
                     echo($row['VAT_owner']);
+                    echo("&client_vat=");  
+                    echo($_REQUEST['client_vat']);
                     echo("\">Add Blood Test</a></td>\n");                                                    
                     echo("</tr>\n");      
                     $aux++;              
@@ -87,6 +89,23 @@
             }  
             echo("</table>"); 
         }
+
+        $stmt=$connection->prepare(" SELECT name from person WHERE VAT=:vat_owner");
+        
+        $stmt->bindParam(':vat_owner', $row['VAT_owner']);
+        $result=$stmt->execute();
+        if ($result == FALSE)
+        {
+            echo("Query animal consults");
+            $info = $connection->errorInfo();
+            echo("<p>Error: {$info[2]}</p>");
+            exit();
+        }
+        
+        
+        $name_owner = $stmt->fetch();
+        echo("{$name_owner['name']}");
+        
         $connection = null;
 
         
@@ -97,9 +116,22 @@
     echo("&client_vat=");  
     echo($_REQUEST['client_vat']); 
     echo("\"><button style=\" margin-top:20px;\">Add new consult</button></a>\n");  
+
+    
     
     ?>
-    <button onclick="history.go(-1);">Back to animals list </button>
+    <form action="execsearch.php" method="post">
+        <p>Client VAT:<?=$_REQUEST['client_vat']?>
+            <input type="hidden" name="VAT_client" value="<?=$_REQUEST['client_vat']?>" />
+        </p>
+        <p>Owner Name: <?= $name_owner['name']?>
+            <input type="hidden" name="owner_name" value="<?= $name_owner['name']?>"/>
+        </p>  
+        <p>Animal Name:<?=$animal_name?>
+            <input type="hidden" name="animal_name" value="<?=$animal_name?>" />
+        </p>
+        <p><input type="submit" value="Back to animals list"/></p>
+        </form>
 </body>
        
 </html>
