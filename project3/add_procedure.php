@@ -48,8 +48,6 @@
     $procedures=$stmt->fetchAll();
 
     $num = count($procedures) + 1;
-    
-    echo("$animal_name $vat_owner $date $num $desc");
 
     $stmt=$connection->prepare("INSERT INTO procedures (name, VAT_owner, date_timestamp, num, descriptions)
                         values (:name, :vat_owner, :date, :num, :desc)");
