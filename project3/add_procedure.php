@@ -7,8 +7,9 @@
     $vat_assistant = $_REQUEST['vat_assistant'];
     $desc = $_REQUEST['desc'];
     $white_cell = $_REQUEST['white_cell'];
-    $blood_pressure = $_REQUEST['blood_pressure'];
-    $hemoglobin = $_REQUEST['hemoglobin'];
+    $neutrophils_nr = $_REQUEST['neutrophils_nr'];
+    $lymphocytes_nr = $_REQUEST['lymphocytes_nr'];
+    $monocytes_nr = $_REQUEST['monocytes_nr'];
 
     $host = "db.ist.utl.pt";
     $user = "ist181702";
@@ -120,7 +121,7 @@
 
     if ($result== FALSE)
     {
-        echo("Insert White Blood query");
+        echo("No White Blood indicator");
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
         exit();
@@ -129,42 +130,63 @@
     $performed=$stmt->fetchAll();
 
     $stmt=$connection->prepare("INSERT INTO produced_indicator (name, VAT_owner, date_timestamp, num, indicator_name, p_value)
-                        values (:name, :vat_owner, :date, :num, 'blood pressure', :value)");
+                        values (:name, :vat_owner, :date, :num, 'number of neutrophils', :value)");
         $stmt->bindParam(':name', $animal_name);
         $stmt->bindParam(':vat_owner', $vat_owner);
         $stmt->bindParam(':date', $date);
         $stmt->bindParam(':num', $num);
-        $stmt->bindParam(':value', $blood_pressure);
+        $stmt->bindParam(':value', $neutrophils_nr);
 
         $result = $stmt->execute();
 
     if ($result== FALSE)
     {
-        echo("Insert Blood Pressure query");
+        echo("No Neutrophils indicator");
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
         exit();
     }
 
     $stmt=$connection->prepare("INSERT INTO produced_indicator (name, VAT_owner, date_timestamp, num, indicator_name, p_value)
-                        values (:name, :vat_owner, :date, :num, 'hemoglobin', :value)");
+                        values (:name, :vat_owner, :date, :num, 'number of lymphocytes', :value)");
         $stmt->bindParam(':name', $animal_name);
         $stmt->bindParam(':vat_owner', $vat_owner);
         $stmt->bindParam(':date', $date);
         $stmt->bindParam(':num', $num);
-        $stmt->bindParam(':value', $hemoglobin);
+        $stmt->bindParam(':value', $lymphocytes_nr);
 
         $result = $stmt->execute();
 
     if ($result== FALSE)
     {
-        echo("Insert Hemoglobin query");
+        echo("No Lymphocytes indicator");
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
         exit();
     }
 
     $performed=$stmt->fetchAll();
+
+    $stmt=$connection->prepare("INSERT INTO produced_indicator (name, VAT_owner, date_timestamp, num, indicator_name, p_value)
+    values (:name, :vat_owner, :date, :num, 'number of monocytes', :value)");
+    $stmt->bindParam(':name', $animal_name);
+    $stmt->bindParam(':vat_owner', $vat_owner);
+    $stmt->bindParam(':date', $date);
+    $stmt->bindParam(':num', $num);
+    $stmt->bindParam(':value', $monocytes_nr);
+
+    $result = $stmt->execute();
+
+    if ($result== FALSE)
+    {
+        echo("No Monocytes indicator");
+        $info = $connection->errorInfo();
+        echo("<p>Error: {$info[2]}</p>");
+        exit();
+    }
+
+    $performed=$stmt->fetchAll();
+
     $connection->commit();
 
     $connection = null;

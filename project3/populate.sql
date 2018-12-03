@@ -206,7 +206,10 @@ VALUES ('blood pressure', 99.9, 'milligrams', 'description'),
        ('creatine level', 0.5, 'milligrams', 'description'),
        ('Testosterone level', 170.0, 'milligrams', 'description'),
        ('Adrenaline level', 200, 'milligrams', 'description'),
-       ('Vasopressin', 500, 'milligrams', 'description');
+       ('Vasopressin', 500, 'milligrams', 'description'),
+       ('number of neutrophils', 100, 'x10^9/L', 'description'),
+       ('number of lymphocytes', 100, 'x10^9/L', 'description'),
+       ('number of monocytes', 100, 'x10^9/L', 'description');
 
 
 /*** consult ***/

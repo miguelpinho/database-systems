@@ -7,6 +7,9 @@
     $date= $_REQUEST['date'];
     ?>
     
+    <h1>Blood Test Registration</h1>
+    <h2>Please fill the form for a new blood test</h2>
+
     <form action="add_procedure.php" method="post">
         <p>Assistant VAT:
             <select name="vat_assistant">
@@ -47,22 +50,25 @@
             </select>
         </p>
         <p>Description:
-            <input type="text" name="desc"/>
+            <input type="text" name="desc" required/>
         </p>
         <p>White Blood Cell amount:
-            <input type="text" name="white_cell"/>
+            <input type="number" min="0" step="0.01" max = "999.99" name="white_cell" required/>
         </p>  
-        <p>Blood Pressure:
-            <input type="text" name="blood_pressure"/>
+        <p>Number of Neutrophils:
+            <input type="number" min="0" step="0.01" max = "999.99" name="neutrophils_nr" required/>
         </p>
-        <p>Hemoglobin:
-            <input type="text" name="hemoglobin"/>
+        <p>Number of Lymphocytes:
+            <input type="number" min="0" step="0.01" max = "999.99" name="lymphocytes_nr" required/>
         </p>
-            <input type="hidden" name="animal_name" value='<?=$animal_name?>'/>
+        <p>Number of Monocytes:
+            <input type="number" min="0" step="0.01" max = "999.99" name="monocytes_nr" required/>
         </p>
-            <input type="hidden" name="date" value='<?=$date?>'/>
+            <input type="hidden" name="animal_name" value='<?=$animal_name?>' required/>
         </p>
-            <input type="hidden" name="owner_vat" value='<?=$vat_owner?>'/>
+            <input type="hidden" name="date" value='<?=$date?>' required/>
+        </p>
+            <input type="hidden" name="owner_vat" value='<?=$vat_owner?>' required/>
         </p>
         <p><input type="submit" value="Add"/></p>
         </form>
