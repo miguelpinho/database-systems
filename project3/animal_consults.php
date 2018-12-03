@@ -110,9 +110,9 @@
 
         
     echo("<a style=\" margin-top:20px;\" href=\"new_consult.php?animal_name=");
-    echo($row['name']);
+    echo($animal_name);
     echo("&owner_vat=");  
-    echo($row['VAT_owner']);
+    echo($owner_VAT);
     echo("&client_vat=");  
     echo($_REQUEST['client_vat']); 
     echo("\"><button style=\" margin-top:20px;\">Add new consult</button></a>\n");  

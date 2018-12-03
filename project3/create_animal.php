@@ -51,7 +51,7 @@
         }
         
         $connection = null;
-        echo("<h3>O seu animal foi bem inserido</h3>\n");
+        echo("<h3>Animal successfully inserted</h3>\n");
         echo("<form action='search_animal_form.php' method='post'> 
              <input type='submit' value='Go To Homepage'/>           
         </form>");

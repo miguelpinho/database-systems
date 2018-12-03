@@ -140,9 +140,9 @@
             </form>"); 
             echo("<form action='create_animal.php' method='post'>
                     <p>Name:
-                        <input type='text' name='animal_name'/>
+                        <input type='text' name='animal_name' required/>
                     </p>
-                    <p> VAT Owner:$VAT_client
+                    <p> VAT Owner: $VAT_client
                         <input type='hidden' name='VAT_owner' value='$VAT_client'/>
                     </p>");
 
