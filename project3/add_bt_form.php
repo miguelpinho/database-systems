@@ -5,9 +5,6 @@
     $animal_name=$_REQUEST['animal_name'];
     $vat_owner=$_REQUEST['owner_vat'];
     $date= $_REQUEST['date'];
-    
-
-    echo ("$animal_name $date $vat_owner $hemoglobin dsdfewfefwei");
     ?>
     
     <form action="add_procedure.php" method="post">
