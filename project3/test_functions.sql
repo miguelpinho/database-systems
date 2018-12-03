@@ -3,11 +3,26 @@ SELECT total_consults_year('Charlie', 63799, 2017);
 
 SELECT * FROM consult WHERE name = 'Charlie' AND VAT_owner = 63799;
 
+
 /* 5. change units milligrams to to_centigrams */
-select name, reference_value, units from indicator where units = "milligrams";
-select M.name, M.VAT_owner, M.date_timestamp, M.num, M.indicator_name, M.p_value, I.units from produced_indicator M inner join indicator I on M.indicator_name = I.name where I.units = "milligrams";
+SELECT name, reference_value, units FROM indicator
+WHERE units = "milligrams";
 
-call to_centigrams();
+SELECT M.name, M.VAT_owner, M.date_timestamp, M.num, M.indicator_name,
+       M.p_value, I.units
+FROM produced_indicator M
+INNER JOIN indicator I
+    ON M.indicator_name = I.name
+WHERE I.units = "milligrams";
 
-select name, reference_value, units from indicator where units = "centigrams";
-select M.name, M.VAT_owner, M.date_timestamp, M.num, M.indicator_name, M.p_value, I.units from produced_indicator M inner join indicator I on M.indicator_name = I.name where I.units = "centigrams";
+CALL to_centigrams();
+
+SELECT name, reference_value, units FROM indicator
+WHERE units = "centigrams";
+
+SELECT M.name, M.VAT_owner, M.date_timestamp, M.num, M.indicator_name,
+       M.p_value, I.units
+FROM produced_indicator M
+INNER JOIN indicator I
+    ON M.indicator_name = I.name
+WHERE I.units = "centigrams";
