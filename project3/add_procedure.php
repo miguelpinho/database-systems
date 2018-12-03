@@ -174,7 +174,7 @@
     echo("&owner_vat=");  
     echo($vat_owner);
     echo("&client_vat=");  
-    echo($client_vat); 
+    echo($_REQUEST['client_vat']); 
     echo("\"><button style=\" margin-top:20px;\">Back to animal consults</button></a>\n");
     ?>
 

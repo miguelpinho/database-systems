@@ -80,6 +80,8 @@
                     echo($row['date_timestamp']);
                     echo("&owner_vat=");  
                     echo($row['VAT_owner']);
+                    echo("&client_vat=");  
+                    echo($_REQUEST['client_vat']);
                     echo("\">Add Blood Test</a></td>\n");                                                    
                     echo("</tr>\n");      
                     $aux++;              
