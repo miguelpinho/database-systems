@@ -19,13 +19,13 @@ BEGIN
 
     SELECT MAX(date_timestamp) INTO most_recent
     FROM consult
-    WHERE name = new.name AND VAT_owner = new.VAT_owner;
+    WHERE name = NEW.name AND VAT_owner = NEW.VAT_owner;
 
     UPDATE animal
     SET age = TIMESTAMPDIFF(YEAR, birth_year, most_recent), name = name,
         VAT = VAT, species_name = species_name,colour = colour,
         gender = gender, birth_year = birth_year
-    WHERE name = new.name AND VAT = new.VAT_owner;
+    WHERE name = NEW.name AND VAT = NEW.VAT_owner;
 END$$
 
 
@@ -46,13 +46,13 @@ END$$
 CREATE TRIGGER ins_assistant BEFORE INSERT ON veterinary
 FOR EACH ROW
 BEGIN
-    CALL check_vet_ic(new.VAT);
+    CALL check_vet_ic(NEW.VAT);
 END$$
 
 CREATE TRIGGER upd_assistant BEFORE UPDATE ON veterinary
 FOR EACH ROW
 BEGIN
-    CALL check_vet_ic(new.VAT);
+    CALL check_vet_ic(NEW.VAT);
 END$$
 
 CREATE PROCEDURE check_assistant_ic
@@ -71,13 +71,13 @@ END$$
 CREATE TRIGGER ins_vet BEFORE INSERT ON assistant
 FOR EACH ROW
 BEGIN
-    CALL check_assistant_ic(new.VAT);
+    CALL check_assistant_ic(NEW.VAT);
 END$$
 
 CREATE TRIGGER upd_vet BEFORE UPDATE ON assistant
 FOR EACH ROW
 BEGIN
-    CALL check_assistant_ic(new.VAT);
+    CALL check_assistant_ic(NEW.VAT);
 END$$
 
 
@@ -98,13 +98,13 @@ END$$
 CREATE TRIGGER ins_phone BEFORE INSERT ON phone_number
 FOR EACH ROW
 BEGIN
-    CALL check_phone_ic(new.phone);
+    CALL check_phone_ic(NEW.phone);
 END$$
 
 CREATE TRIGGER upd_phone BEFORE UPDATE ON phone_number
 FOR EACH ROW
 BEGIN
-    CALL check_phone_ic(new.phone);
+    CALL check_phone_ic(NEW.phone);
 END$$
 
 delimiter ;
