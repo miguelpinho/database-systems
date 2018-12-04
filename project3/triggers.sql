@@ -5,7 +5,6 @@ DROP TRIGGER IF EXISTS upd_assistant;
 DROP PROCEDURE IF EXISTS check_assistant_ic;
 DROP TRIGGER IF EXISTS ins_vet;
 DROP TRIGGER IF EXISTS upd_vet;
-DROP PROCEDURE IF EXISTS check_phone_ic;
 DROP TRIGGER IF EXISTS ins_phone;
 DROP TRIGGER IF EXISTS upd_phone;
 
@@ -82,29 +81,31 @@ END$$
 
 
 /* 3. ensure a phone_number is unique */
-CREATE PROCEDURE check_phone_ic
-(IN phone VARCHAR(15))
+CREATE TRIGGER ins_phone BEFORE INSERT ON phone_number
+FOR EACH ROW
 BEGIN
     DECLARE msg VARCHAR(255);
     IF EXISTS (SELECT phone_number.phone FROM phone_number
-        WHERE phone_number.phone = phone) THEN
+               WHERE phone_number.phone = NEW.phone) THEN
         SET msg = CONCAT("IC: someone already has phone number ",
-           phone,  ".");
+           NEW.phone,  ".");
 
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
     END IF;
 END$$
 
-CREATE TRIGGER ins_phone BEFORE INSERT ON phone_number
-FOR EACH ROW
-BEGIN
-    CALL check_phone_ic(NEW.phone);
-END$$
-
 CREATE TRIGGER upd_phone BEFORE UPDATE ON phone_number
 FOR EACH ROW
 BEGIN
-    CALL check_phone_ic(NEW.phone);
+    DECLARE msg VARCHAR(255);
+    IF EXISTS (SELECT phone_number.phone FROM phone_number
+               WHERE phone_number.phone = NEW.phone
+               AND phone_number.VAT <> OLD.VAT) THEN
+        SET msg = CONCAT("IC: someone already has phone number ",
+           NEW.phone,  ".");
+
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+    END IF;
 END$$
 
 delimiter ;

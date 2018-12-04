@@ -45,12 +45,13 @@ SELECT VAT AS VAT_vet FROM veterinary;
 
 /* 3. Test if the same phone_number can be used */
 /* test successful insert */
-INSERT INTO phone_number VALUES (5121, '741-51251');
+INSERT INTO phone_number VALUES (5121, '312-21189');
 
 /* test unsuccessful insert and update */
-INSERT INTO phone_number VALUES (5121, '312-21189');
+INSERT INTO phone_number VALUES (5121, '741-51251');
+
 UPDATE phone_number
     SET phone = '741-51251'
-    WHERE VAT = 77777 and phone = "412-34212";
+    WHERE VAT = 5121 and phone = '312-21189';
 
 SELECT * FROM phone_number WHERE VAT = 5121;
