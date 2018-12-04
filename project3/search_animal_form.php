@@ -1,5 +1,5 @@
 <html>
-<body>
+<body><h2>Search Animal:</h2>
     <form action="execsearch.php" method="post">
         <p>Client VAT:
             <input type="number" min="0" name="VAT_client" required/>

@@ -4,7 +4,7 @@
         $VAT_client = (integer)$_REQUEST['VAT_client'];
         $owner_name = $_REQUEST['owner_name'];
         $animal_name = $_REQUEST['animal_name'];
-           echo("$VAT_client, $owner_name, $animal_name ");
+          
     
         $host = "db.ist.utl.pt";
         $user = "ist181702";
@@ -35,15 +35,24 @@
             echo("<p>Error: {$info[2]}</p>");
             exit();
         }
-        $clients=$stmt->fetchAll();
+        $client=$stmt->fetch();
+        $n_clients=$stmt->rowCount();
 
-        if(count($clients)>0)
+        if($n_clients>0)
         {
-            foreach($clients as $client)
+            echo("<h4>Client:</h4>");
+            echo("<table border=\"1\" style=\"margin-bottom: 20px;\"> ");  
+            echo("<tr>");                                   
+            echo("<td>VAT</td>");
+            echo("<td>Name</td>");
+            echo("<td>Addres</td>");
+            echo("<td>City</td>");
+            echo("<td>Zip</td>");                                     
+            echo("</tr>\n");       
+            echo("<tr>"); 
+            /*foreach($clients as $client)*/
             {
-                echo("<h4>Client:</h4>");
-                echo("<table style=\"margin-bottom: 20px;\">");        
-                echo("<tr>");                     
+                                    
                 echo("<td>{$client['VAT']}</td>");
                 echo("<td>{$client['name']}</td>");
                 echo("<td>{$client['address_street']}</td>");
@@ -88,7 +97,7 @@
         $result =$stmt->fetchAll();
         $num_rows = count($result);
                   
-        if($num_rows > 0 && count($clients)>0)
+        if($num_rows > 0 && $n_clients>0)
         {
             echo("<h4>Animals:</h4>");
             echo("<table border=\"1\">
@@ -116,11 +125,11 @@
                     echo("</tr>\n");   
             }  
             echo("</table>");  
-            echo("<form action='search_animal_form.php' method='post'> 
+            echo("<form style=\"margin-top: 20px\"action='search_animal_form.php' method='post'> 
              <input type='submit' value='Go To Homepage'/>           
         </form>"); 
         }
-        elseif(count($clients)>0)        
+        elseif($n_clients>0)        
         {
             $sql = "SELECT name FROM species";
             $species = $connection->query($sql);
@@ -135,9 +144,7 @@
 
             echo("<h3>No animal found</h3>\n");
             echo("<h2>Add animal:</h2>\n");
-            echo("<form action='search_animal_form.php' method='post'> 
-            <input type='submit' value='Go To Homepage'/>           
-            </form>"); 
+             
             echo("<form action='create_animal.php' method='post'>
                     <p>Name:
                         <input type='text' name='animal_name' required/>
@@ -173,6 +180,9 @@
                         <input type='submit' value='Add Animal'/>
                     </p>
                 </form>");
+                echo("<form action='search_animal_form.php' method='post'> 
+            <input type='submit' value='Go To Homepage'/>           
+            </form>");
            
         }
         $connection = null;
