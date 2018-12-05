@@ -22,7 +22,7 @@
 
         $animal_name=$_REQUEST['animal_name'];
         $owner_VAT=(integer)$_REQUEST['owner_vat'];
-        echo("$owner_VAT, $animal_name");
+        
         $stmt=$connection->prepare(" SELECT * from consult WHERE consult.name=:name AND consult.VAT_owner=:vat_owner");
         $stmt->bindParam('name',$animal_name);
         $stmt->bindParam(':vat_owner', $owner_VAT);
@@ -104,7 +104,7 @@
         
         
         $name_owner = $stmt->fetch();
-        echo("{$name_owner['name']}");
+        
         
         $connection = null;
 
@@ -121,13 +121,13 @@
     
     ?>
     <form action="execsearch.php" method="post">
-        <p>Client VAT:<?=$_REQUEST['client_vat']?>
+        <p>
             <input type="hidden" name="VAT_client" value="<?=$_REQUEST['client_vat']?>" />
         </p>
-        <p>Owner Name: <?= $name_owner['name']?>
+        <p>
             <input type="hidden" name="owner_name" value="<?= $name_owner['name']?>"/>
         </p>  
-        <p>Animal Name:<?=$animal_name?>
+        <p>
             <input type="hidden" name="animal_name" value="<?=$animal_name?>" />
         </p>
         <p><input type="submit" value="Back to animals list"/></p>
