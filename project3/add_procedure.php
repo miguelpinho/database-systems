@@ -11,6 +11,8 @@
     $lymphocytes_nr = $_REQUEST['lymphocytes_nr'];
     $monocytes_nr = $_REQUEST['monocytes_nr'];
 
+    
+
     $host = "db.ist.utl.pt";
     $user = "ist181702";
     $pass = "nqit9741";
@@ -42,6 +44,7 @@
         echo("Num determination query");
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
+        $connection->rollback();
         exit();
     }
 
@@ -65,12 +68,14 @@
         echo("Insert Procedure query");
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
+        $connection->rollback();
         exit();
     }
 
     $procedures=$stmt->fetchAll();
     
-    $stmt=$connection->prepare("INSERT INTO performed (name, VAT_owner, date_timestamp, num, VAT_assistant)
+    if ($vat_assistant <> 'None') {
+          $stmt=$connection->prepare("INSERT INTO performed (name, VAT_owner, date_timestamp, num, VAT_assistant)
                         values (:name, :vat_owner, :date, :num, :assistant_vat )");
         $stmt->bindParam(':name', $animal_name);
         $stmt->bindParam(':vat_owner', $vat_owner);
@@ -85,10 +90,14 @@
         echo("Insert Performed query");
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
+        $connection->rollback();
         exit();
     }
 
     $performed=$stmt->fetchAll();
+    }
+
+  
 
     $stmt=$connection->prepare("INSERT INTO test_procedure (name, VAT_owner, date_timestamp, num, test_type)
                         values (:name, :vat_owner, :date, :num, 'blood')");
@@ -104,6 +113,7 @@
         echo("Insert Test Procedure query");
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
+        $connection->rollback();
         exit();
     }
 
@@ -124,6 +134,7 @@
         echo("No White Blood indicator");
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
+        $connection->rollback();
         exit();
     }
 
@@ -144,6 +155,7 @@
         echo("No Neutrophils indicator");
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
+        $connection->rollback();
         exit();
     }
 
@@ -162,6 +174,7 @@
         echo("No Lymphocytes indicator");
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
+        $connection->rollback();
         exit();
     }
 
@@ -182,6 +195,7 @@
         echo("No Monocytes indicator");
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
+        $connection->rollback();
         exit();
     }
 

@@ -39,12 +39,15 @@
                 exit();
             }
 
+            echo("<option value=\"None\">None</option>");
+            
             foreach($result as $row)
             {
                 $vat = $row['VAT'];
                 echo("<option value=\"$vat\">$vat</option>");
             }
 
+            
             $connection = null;
             ?>
             </select>
