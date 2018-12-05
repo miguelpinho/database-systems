@@ -61,7 +61,7 @@ BEGIN
     IF EXISTS (SELECT veterinary.VAT FROM veterinary
         WHERE veterinary.VAT = VAT) THEN
         SET msg = CONCAT("IC: person VAT ", VAT,
-        " is already a vet, cannot be a assistant too.");
+        " is already a vet, cannot be an assistant too.");
 
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
     END IF;
