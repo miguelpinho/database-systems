@@ -92,7 +92,7 @@
 
         $stmt=$connection->prepare(" SELECT name from person WHERE VAT=:vat_owner");
         
-        $stmt->bindParam(':vat_owner', $row['VAT_owner']);
+        $stmt->bindParam(':vat_owner', $owner_VAT);
         $result=$stmt->execute();
         if ($result == FALSE)
         {
