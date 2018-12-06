@@ -165,16 +165,16 @@
             
             echo("
                     <p>Animal Color:
-                        <input type='text' name='animal_color'/>
+                        <input type='text' name='animal_color' required/>
                     </p>
                     <p>Animal Gender:
-                        <input type='text' name='animal_gender'/>
+                        <input type='text' name='animal_gender' required/>
                     </p>
                     <p>Birth Year:
-                        <input type='text' name='animal_birth_year'/>
+                        <input type='text' name='animal_birth_year' required/>
                     </p>
                     <p>Age:
-                        <input type='text' name='animal_age'/>
+                        <input type='number' min='1' name='animal_age' required/>
                     </p>
                     <p>
                         <input type='submit' value='Add Animal'/>
