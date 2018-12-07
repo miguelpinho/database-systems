@@ -53,7 +53,7 @@
             </select>
         </p>
         <p>Description:
-            <input type="text" name="desc" required/>
+            <input type="text" name="desc" maxlength='254' required/>
         </p>
         <p>White Blood Cell amount:
             <input type="number" min="0" step="0.01" max = "999.99" name="white_cell" required/>

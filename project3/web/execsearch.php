@@ -134,7 +134,7 @@
 
             echo("<form action='create_animal.php' method='post'>
                     <p>Name:
-                        <input type='text' name='animal_name' required/>
+                        <input type='text' name='animal_name' maxlength='34' required/>
                     </p>
                     <p> VAT Owner: $VAT_client
                         <input type='hidden' name='VAT_owner' value='$VAT_client'/>
@@ -152,10 +152,10 @@
 
             echo("
                     <p>Animal Color:
-                        <input type='text' name='animal_color' required/>
+                        <input type='text' name='animal_color' maxlength='13' required/>
                     </p>
                     <p>Animal Gender:
-                        <input type='text' name='animal_gender' required/>
+                        <input type='text' name='animal_gender' maxlength='13' required/>
                     </p>
                     <p>Birth Date:
                         <input type='date' name='animal_birth_year' required/>
