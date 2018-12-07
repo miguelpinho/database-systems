@@ -2,9 +2,9 @@
 <body>
     <?php    
     $animal_name=$_REQUEST['animal_name'];
-    $vat_owner=$_REQUEST['owner_vat'];
+    $vat_owner=(integer)$_REQUEST['owner_vat'];
     $date= $_REQUEST['date'];
-    $vat_assistant = $_REQUEST['vat_assistant'];
+    $vat_assistant = (integer)$_REQUEST['vat_assistant'];
     $desc = $_REQUEST['desc'];
     $white_cell = $_REQUEST['white_cell'];
     $neutrophils_nr = $_REQUEST['neutrophils_nr'];
