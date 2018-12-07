@@ -42,7 +42,7 @@
         $result=$stmt->execute();
         if ($result == FALSE)
         {
-            echo("UPDATE_consult");
+            echo("<p>Couldn't add animal</p>");
             $info = $connection->errorInfo();
             echo("<p>Error: {$info[2]}</p>");
             exit();
