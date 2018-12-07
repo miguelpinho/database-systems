@@ -157,8 +157,8 @@
                     <p>Animal Gender:
                         <input type='text' name='animal_gender' required/>
                     </p>
-                    <p>Birth Year:
-                        <input type='text' name='animal_birth_year' required/>
+                    <p>Birth Date:
+                        <input type='date' name='animal_birth_year' required/>
                     </p>
                     <p>Age:
                         <input type='number' min='1' name='animal_age' required/>
