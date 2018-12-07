@@ -28,18 +28,6 @@
     <h3 style="display: inline"> Name:</h3> <p style="display: inline"><?=$animal_name?></p>
 
     <?php
-    /*
-    $sql= "SELECT distinct consult.VAT_owner as owner_vat ,owner.name as owner_name, consult.VAT_client as client_vat,
-    client.name as client_name, consult.VAT_vet as vet_vat, vet.name as vet_name, s, o, a, p, weight
-    from consult
-    INNER JOIN person AS owner
-        ON consult.VAT_owner=owner.VAT
-    INNER JOIN person AS client
-        ON consult.VAT_client=client.VAT
-    INNER JOIN person AS vet
-        ON consult.VAT_vet=vet.VAT
-    WHERE consult.name='$animal_name' AND consult.VAT_owner=$vat_owner AND consult.date_timestamp='$date'";
-    */
     $stmt=$connection->prepare("SELECT distinct consult.VAT_owner as owner_vat ,owner.name as owner_name, consult.VAT_client as client_vat,
     client.name as client_name, consult.VAT_vet as vet_vat, vet.name as vet_name, s, o, a, p, weight
     from consult
@@ -150,7 +138,6 @@
     </tr>
     </table>
 
-
     <?php
     $stmt= $connection->prepare("SELECT code from consult_diagnosis WHERE name=:name AND VAT_owner=:vat_owner AND date_timestamp=:date");
     $stmt->bindParam('name',$animal_name);
@@ -175,17 +162,6 @@
         }
         echo("</ul>");
     }
-
-
-    /*
-    $sql="SELECT code, name_med, lab, dosage, regime FROM prescription WHERE name='$animal_name' AND VAT_owner=$vat_owner AND date_timestamp='$date'";
-    $result = $connection->query($sql);
-    if ($result == FALSE)
-    {
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
-        exit();
-    }*/
 
     $stmt=$connection->prepare("SELECT code, name_med, lab, dosage, regime FROM prescription
                                 WHERE name=:name AND VAT_owner=:vat_owner AND date_timestamp=:date");

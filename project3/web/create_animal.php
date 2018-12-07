@@ -9,8 +9,6 @@
         $animal_birth_year = $_REQUEST['animal_birth_year'];
         $animal_age = (integer)$_REQUEST['animal_age'];
 
-
-
         echo("$VAT_owner, $animal_name, $species_name, $animal_color, $animal_gender, $animal_birth_year, $animal_age");
 
         $host = "db.ist.utl.pt";

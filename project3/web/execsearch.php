@@ -5,7 +5,6 @@
         $owner_name = $_REQUEST['owner_name'];
         $animal_name = $_REQUEST['animal_name'];
 
-
         $host = "db.ist.utl.pt";
         $user = "ist181702";
         $pass = "nqit9741";
@@ -68,15 +67,6 @@
             <input type='submit' value='Go To Homepage'/>
             </form>");
         }
-        /*
-        $sql="SELECT distinct animal.name as animals_name, animal.VAT as owner_vat, person.name as owner_name
-            FROM animal, person
-            WHERE person.VAT=animal.VAT AND  animal.name LIKE '%$animal_name%' AND person.name LIKE '%$owner_name%'";
-        $result = $connection->query($sql);
-        $rows = $result->fetchAll();
-        $num_rows = count($rows);
-        */
-        /*echo("$owner_name");*/
 
         $stmt = $connection->prepare("SELECT distinct animal.name as animals_name, animal.VAT as owner_vat, person.name as owner_name
         FROM animal, person
@@ -140,8 +130,6 @@
                 exit();
             }
 
-
-
             echo("<h3>No animal found</h3>\n");
             echo("<h2>Add animal:</h2>\n");
 
@@ -187,12 +175,6 @@
         }
         $connection = null;
         ?>
-
-
-
-
-
-
 
 </body>
 </html>

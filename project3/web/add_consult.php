@@ -28,20 +28,6 @@
              exit();
          }
 
-
-
-
-        /*
-        $sql = "INSERT INTO consult (name, VAT_owner, date_timestamp, VAT_client, VAT_vet, weight,s, o, a, p)
-                values ('$animal_name', $owner_vat, '$date', $client_vat, $vet_vat, $weight, '$s', '$o', '$a', '$p' )";
-        $result = $connection->query($sql);
-        if ($result == FALSE)
-        {
-            $info = $connection->errorInfo();
-            echo("<p>Error: {$info[2]}</p>");
-            exit();
-        }
-        */
         $stmt=$connection->prepare("INSERT INTO consult (name, VAT_owner, date_timestamp, VAT_client, VAT_vet, weight,s, o, a, p)
                         values (:name, :vat_owner, :date, :client_vat, :vet_vat, :weight, :s, :o, :a, :p )");
         $stmt->bindParam(':name', $animal_name);
@@ -75,17 +61,6 @@
         }
         $codes = $stmt->fetchAll();
 
-
-        /*
-        foreach($codes as $row)
-        {
-            $code = $row['code'];
-            if($_POST['codes'][$code]== $code)
-            {
-                echo("<p>$code\n</p>");
-            }
-
-        }*/
         foreach($codes as $row)
         {
             $code = $row['code'];

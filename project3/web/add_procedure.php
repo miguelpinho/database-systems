@@ -11,8 +11,6 @@
     $lymphocytes_nr = $_REQUEST['lymphocytes_nr'];
     $monocytes_nr = $_REQUEST['monocytes_nr'];
 
-
-
     $host = "db.ist.utl.pt";
     $user = "ist181702";
     $pass = "nqit9741";
@@ -47,7 +45,6 @@
         $connection->rollback();
         exit();
     }
-
 
     $procedures=$stmt->fetchAll();
 

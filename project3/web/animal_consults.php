@@ -117,8 +117,6 @@
     echo($_REQUEST['client_vat']);
     echo("\"><button style=\" margin-top:20px;\">Add new consult</button></a>\n");
 
-
-
     ?>
     <form action="execsearch.php" method="post">
         <p>
