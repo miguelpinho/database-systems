@@ -47,8 +47,7 @@
     if ($result == FALSE)
     {
         echo("Consult info");
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
+        echo("<p><button onclick='history.go(-1)';>Back</button>");
         exit();
     }
 
@@ -100,8 +99,7 @@
         if ($result == FALSE)
         {
             echo("Animal info");
-            $info = $connection->errorInfo();
-            echo("<p>Error: {$info[2]}</p>");
+            echo("<p><button onclick='history.go(-1)';>Back</button>");
             exit();
         }
 
@@ -136,8 +134,8 @@
     $result=$stmt->execute();
     if ($result == FALSE)
     {
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
+        echo("Error");
+        echo("<p><button onclick='history.go(-1)';>Back</button>");
         exit();
     }
     $d_codes =$stmt->fetchAll();
@@ -163,8 +161,7 @@
     if ($result == FALSE)
     {
         echo("prescriptions query");
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
+        echo("<p><button onclick='history.go(-1)';>Back</button>");
         exit();
     }
 

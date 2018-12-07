@@ -78,8 +78,7 @@
         if ($result== FALSE)
         {
             echo("Animal search query");
-            $info = $connection->errorInfo();
-            echo("<p>Error: {$info[2]}</p>");
+            echo("<p><button onclick='history.go(-1)';>Back</button>");
             exit();
         }
 
@@ -128,7 +127,7 @@
                 echo("<p>Error: {$info[2]}</p>");
                 exit();
             }
-
+            $actual_date=date("Y-m-d");
             echo("<h3>No animal found</h3>\n");
             echo("<h2>Add animal:</h2>\n");
 
@@ -158,7 +157,7 @@
                         <input type='text' name='animal_gender' maxlength='13' required/>
                     </p>
                     <p>Birth Date:
-                        <input type='date' name='animal_birth_year' required/>
+                        <input type='date' name='animal_birth_year' max='$actual_date' min=\"1900-01-01\" required/>
                     </p>
                     <p>Age:
                         <input type='number' min='1' name='animal_age' required/>
