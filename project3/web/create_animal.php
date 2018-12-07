@@ -43,8 +43,7 @@
         if ($result == FALSE)
         {
             echo("<p>Couldn't add animal</p>");
-            $info = $connection->errorInfo();
-            echo("<p>Error: {$info[2]}</p>");
+            echo("<p><button onclick='history.go(-1)';>Back</button>");
             exit();
         }
 

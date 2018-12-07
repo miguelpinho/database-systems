@@ -40,8 +40,7 @@
     if ($result== FALSE)
     {
         echo("Num determination query");
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
+        echo("<p><button onclick='history.go(-1)';>Back</button>");
         $connection->rollback();
         exit();
     }
@@ -63,8 +62,7 @@
         if ($result== FALSE)
     {
         echo("Insert Procedure query");
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
+        echo("<p><button onclick='history.go(-1)';>Back</button>");
         $connection->rollback();
         exit();
     }
@@ -85,8 +83,7 @@
         if ($result== FALSE)
     {
         echo("Insert Performed query");
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
+        echo("<p><button onclick='history.go(-1)';>Back</button>");
         $connection->rollback();
         exit();
     }
@@ -108,8 +105,7 @@
         if ($result== FALSE)
     {
         echo("Insert Test Procedure query");
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
+        echo("<p><button onclick='history.go(-1)';>Back</button>");
         $connection->rollback();
         exit();
     }
@@ -129,8 +125,7 @@
     if ($result== FALSE)
     {
         echo("No White Blood indicator");
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
+        echo("<p><button onclick='history.go(-1)';>Back</button>");
         $connection->rollback();
         exit();
     }
@@ -150,8 +145,7 @@
     if ($result== FALSE)
     {
         echo("No Neutrophils indicator");
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
+        echo("<p><button onclick='history.go(-1)';>Back</button>");
         $connection->rollback();
         exit();
     }
@@ -169,8 +163,7 @@
     if ($result== FALSE)
     {
         echo("No Lymphocytes indicator");
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
+        echo("<p><button onclick='history.go(-1)';>Back</button>");
         $connection->rollback();
         exit();
     }
@@ -190,8 +183,7 @@
     if ($result== FALSE)
     {
         echo("No Monocytes indicator");
-        $info = $connection->errorInfo();
-        echo("<p>Error: {$info[2]}</p>");
+        echo("<p><button onclick='history.go(-1)';>Back</button>");
         $connection->rollback();
         exit();
     }
