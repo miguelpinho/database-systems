@@ -49,7 +49,6 @@
             echo("<td>Zip</td>");
             echo("</tr>\n");
             echo("<tr>");
-            /*foreach($clients as $client)*/
             {
 
                 echo("<td>{$client['VAT']}</td>");

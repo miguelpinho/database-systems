@@ -105,7 +105,6 @@
                 $code = $row['code'];
 
                 echo("<input style=\"margin-left: 20px\" type=\"checkbox\"  name=\"codes[$code]\" value=\"$code\"> $code<br>");
-                /*echo("<option value=\"$code\">$code</option>");*/
             }
 
             $connection = null;
