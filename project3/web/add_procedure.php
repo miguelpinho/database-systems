@@ -1,6 +1,6 @@
 <html>
 <body>
-    <?php    
+    <?php
     $animal_name=$_REQUEST['animal_name'];
     $vat_owner=(integer)$_REQUEST['owner_vat'];
     $date= $_REQUEST['date'];
@@ -11,7 +11,7 @@
     $lymphocytes_nr = $_REQUEST['lymphocytes_nr'];
     $monocytes_nr = $_REQUEST['monocytes_nr'];
 
-    
+
 
     $host = "db.ist.utl.pt";
     $user = "ist181702";
@@ -31,13 +31,13 @@
     }
 
     $connection->beginTransaction();
-    
+
     $stmt=$connection->prepare("SELECT num as nr_procedures FROM procedures WHERE procedures.name =:animal_name AND procedures.VAT_owner =:owner_vat AND procedures.date_timestamp =:date_time");
     $result=$stmt ->execute([
         'animal_name' => $animal_name,
         'owner_vat' => $vat_owner,
         'date_time' => $date,
-    ]);   
+    ]);
 
     if ($result== FALSE)
     {
@@ -48,7 +48,7 @@
         exit();
     }
 
-    
+
     $procedures=$stmt->fetchAll();
 
     $num = count($procedures) + 1;
@@ -73,7 +73,7 @@
     }
 
     $procedures=$stmt->fetchAll();
-    
+
     if ($vat_assistant <> 'None') {
           $stmt=$connection->prepare("INSERT INTO performed (name, VAT_owner, date_timestamp, num, VAT_assistant)
                         values (:name, :vat_owner, :date, :num, :assistant_vat )");
@@ -97,7 +97,7 @@
     $performed=$stmt->fetchAll();
     }
 
-  
+
 
     $stmt=$connection->prepare("INSERT INTO test_procedure (name, VAT_owner, date_timestamp, num, test_type)
                         values (:name, :vat_owner, :date, :num, 'blood')");
@@ -207,15 +207,13 @@
     echo("<p>Test successfully inserted</p>");
     echo("<a style=\" margin-top:20px;\" href=\"animal_consults.php?animal_name=");
     echo($animal_name);
-    echo("&owner_vat=");  
+    echo("&owner_vat=");
     echo($vat_owner);
-    echo("&client_vat=");  
-    echo($_REQUEST['client_vat']); 
+    echo("&client_vat=");
+    echo($_REQUEST['client_vat']);
     echo("\"><button style=\" margin-top:20px;\">Back to animal consults</button></a>\n");
     ?>
 
 </body>
 </html>
-    
-    
-    
+

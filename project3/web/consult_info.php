@@ -9,7 +9,7 @@
     $user = "ist181702";
     $pass = "nqit9741";
     $dsn = "mysql:host=$host;dbname=$user";
-    
+
     try
     {
         $connection = new PDO($dsn, $user, $pass);
@@ -26,29 +26,29 @@
     <h1>Consult: <?=$date?></h1>
     <h2>Animal description:</h2>
     <h3 style="display: inline"> Name:</h3> <p style="display: inline"><?=$animal_name?></p>
-    
-    <?php      
+
+    <?php
     /*
     $sql= "SELECT distinct consult.VAT_owner as owner_vat ,owner.name as owner_name, consult.VAT_client as client_vat,
-    client.name as client_name, consult.VAT_vet as vet_vat, vet.name as vet_name, s, o, a, p, weight 
-    from consult 
-    INNER JOIN person AS owner 
-        ON consult.VAT_owner=owner.VAT 
-    INNER JOIN person AS client 
-        ON consult.VAT_client=client.VAT 
-    INNER JOIN person AS vet 
-        ON consult.VAT_vet=vet.VAT 
+    client.name as client_name, consult.VAT_vet as vet_vat, vet.name as vet_name, s, o, a, p, weight
+    from consult
+    INNER JOIN person AS owner
+        ON consult.VAT_owner=owner.VAT
+    INNER JOIN person AS client
+        ON consult.VAT_client=client.VAT
+    INNER JOIN person AS vet
+        ON consult.VAT_vet=vet.VAT
     WHERE consult.name='$animal_name' AND consult.VAT_owner=$vat_owner AND consult.date_timestamp='$date'";
     */
     $stmt=$connection->prepare("SELECT distinct consult.VAT_owner as owner_vat ,owner.name as owner_name, consult.VAT_client as client_vat,
-    client.name as client_name, consult.VAT_vet as vet_vat, vet.name as vet_name, s, o, a, p, weight 
-    from consult 
-    INNER JOIN person AS owner 
-        ON consult.VAT_owner=owner.VAT 
-    INNER JOIN person AS client 
-        ON consult.VAT_client=client.VAT 
-    INNER JOIN person AS vet 
-        ON consult.VAT_vet=vet.VAT 
+    client.name as client_name, consult.VAT_vet as vet_vat, vet.name as vet_name, s, o, a, p, weight
+    from consult
+    INNER JOIN person AS owner
+        ON consult.VAT_owner=owner.VAT
+    INNER JOIN person AS client
+        ON consult.VAT_client=client.VAT
+    INNER JOIN person AS vet
+        ON consult.VAT_vet=vet.VAT
     WHERE consult.name=:name AND consult.VAT_owner=:vat_owner AND consult.date_timestamp=:date");
 
     $stmt->bindParam(':name',$animal_name);
@@ -62,8 +62,8 @@
         $info = $connection->errorInfo();
         echo("<p>Error: {$info[2]}</p>");
         exit();
-    }     
-    
+    }
+
     $consult = $stmt->fetch();
 
     ?>
@@ -82,7 +82,7 @@
         <p style="display: inline; margin-left: 20px"> <?=$consult['vet_vat']?></p>
         <p style="display: inline"><?=$consult['vet_name']?></p>
     </p>
-    
+
     <h3>SOAP Notes:</h3>
     <table border="1" style="margin-left:20px; border-collapse: collapse;width: 600px;">
     <tr>
@@ -92,15 +92,15 @@
         <th>P</th>
     </tr>
     <tr>
-        
-        <td><?=$consult['s']?></td>    
+
+        <td><?=$consult['s']?></td>
         <td><?=$consult['o']?></td>
         <td><?=$consult['a']?></td>
         <td><?=$consult['p']?></td>
-    </tr>  
+    </tr>
     </table>
     <p>
-        <h3 style="display: inline"> Weight:</h3> 
+        <h3 style="display: inline"> Weight:</h3>
         <p style="display: inline"><?=$consult['weight']?> Kg</p>
     </p>
 
@@ -125,12 +125,12 @@
             $info = $connection->errorInfo();
             echo("<p>Error: {$info[2]}</p>");
             exit();
-        }     
-        
-        $animal = $stmt->fetch();    
+        }
+
+        $animal = $stmt->fetch();
     ?>
-    
-    
+
+
     <h3>Animal characteristics:</h3>
     <table border="1" style="margin-left:20px; border-collapse: collapse;width: 600px;">
     <tr>
@@ -141,16 +141,16 @@
         <th>Age</th>
     </tr>
     <tr>
-        
-        <td><?=$animal['species_name']?></td>    
+
+        <td><?=$animal['species_name']?></td>
         <td><?=$animal['colour']?></td>
         <td><?=$animal['gender']?></td>
         <td><?=$animal['birth_year']?></td>
         <td><?=$animal['age']?></td>
-    </tr>  
+    </tr>
     </table>
-    
-   
+
+
     <?php
     $stmt= $connection->prepare("SELECT code from consult_diagnosis WHERE name=:name AND VAT_owner=:vat_owner AND date_timestamp=:date");
     $stmt->bindParam('name',$animal_name);
@@ -168,7 +168,7 @@
     if(count($d_codes)>0)
     {
         echo("<h3>Diagnostic codes:</h3>");
-        echo("<ul style=\"padding-left: 0\" >"); 
+        echo("<ul style=\"padding-left: 0\" >");
         foreach($d_codes as $d_code)
         {
             echo("<li>{$d_code['code']}</li>");
@@ -187,12 +187,12 @@
         exit();
     }*/
 
-    $stmt=$connection->prepare("SELECT code, name_med, lab, dosage, regime FROM prescription 
+    $stmt=$connection->prepare("SELECT code, name_med, lab, dosage, regime FROM prescription
                                 WHERE name=:name AND VAT_owner=:vat_owner AND date_timestamp=:date");
     $stmt->bindParam('name',$animal_name);
     $stmt->bindParam(':vat_owner', $vat_owner);
-    $stmt->bindParam(':date', $date);    
-    
+    $stmt->bindParam(':date', $date);
+
     $result=$stmt->execute();
     if ($result == FALSE)
     {
@@ -214,21 +214,21 @@
             <th>Medicine</th>
             <th>Laboratory</th>
             <th>Dosage</th>
-            <th>Regime</th>                  
+            <th>Regime</th>
         </tr>
         ");
         foreach($prescriptions as $prescription)
-        {           
-            echo("<tr>");                     
+        {
+            echo("<tr>");
             echo("<td>{$prescription['code']}</td>");
             echo("<td>{$prescription['name_med']}</td>");
             echo("<td>{$prescription['lab']}</td>");
-            echo("<td>{$prescription['dosage']}</td>"); 
-            echo("<td>{$prescription['regime']}</td>");                                   
-            echo("</tr>\n");   
-        }  
-        echo("</table>"); 
-    }  
+            echo("<td>{$prescription['dosage']}</td>");
+            echo("<td>{$prescription['regime']}</td>");
+            echo("</tr>\n");
+        }
+        echo("</table>");
+    }
     $connection = null;
     ?>
     <button style="margin-top: 20px;margin-bottom:40px" onclick="history.go(-1);">Back to <?=$animal_name?> consults </button>

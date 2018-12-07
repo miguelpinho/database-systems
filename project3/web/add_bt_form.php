@@ -1,12 +1,12 @@
 <html>
 <body>
-    
+
     <?php
     $animal_name=$_REQUEST['animal_name'];
     $vat_owner=$_REQUEST['owner_vat'];
     $date= $_REQUEST['date'];
     ?>
-    
+
     <h1>Blood Test Registration</h1>
     <h2>Please fill the form for a new blood test</h2>
 
@@ -40,14 +40,14 @@
             }
 
             echo("<option value=\"None\">None</option>");
-            
+
             foreach($result as $row)
             {
                 $vat = $row['VAT'];
                 echo("<option value=\"$vat\">$vat</option>");
             }
 
-            
+
             $connection = null;
             ?>
             </select>
@@ -57,7 +57,7 @@
         </p>
         <p>White Blood Cell amount:
             <input type="number" min="0" step="0.01" max = "999.99" name="white_cell" required/>
-        </p>  
+        </p>
         <p>Number of Neutrophils:
             <input type="number" min="0" step="0.01" max = "999.99" name="neutrophils_nr" required/>
         </p>

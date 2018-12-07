@@ -73,7 +73,7 @@
         </p>
         <p id="myDIV" >
             <h4 style="margin:5px">Diagnosis Codes</h4>
-            
+
             <?php
             $host = "db.ist.utl.pt";
             $user = "ist425321";
@@ -103,14 +103,14 @@
             foreach($result as $row)
             {
                 $code = $row['code'];
-                
+
                 echo("<input style=\"margin-left: 20px\" type=\"checkbox\"  name=\"codes[$code]\" value=\"$code\"> $code<br>");
                 /*echo("<option value=\"$code\">$code</option>");*/
             }
 
             $connection = null;
             ?>
-            
+
         </p>
         <p><input onclick="myFunction()" type="submit" value="Submit"/></p>
     </form>
