@@ -49,7 +49,7 @@
             </select>
         </p>
         <p>Animal weight:
-            <input type="number" min="0" step="0.001" max="999.999" type="text" name="weight" required/>
+            <input type="number" min="0.001" step="0.001" max="999.999" type="text" name="weight" required/>
         </p>
         <p>
             <input type='hidden' name='date' value='<?=date("Y-m-d H:i:s") ?>'/>
