@@ -93,16 +93,6 @@
     </p>
 
     <?php
-        /*
-        $sql = "SELECT species_name, colour, gender, birth_year, age FROM animal WHERE name='$animal_name' AND VAT=$vat_owner " ;
-        $result = $connection->query($sql);
-        if ($result == FALSE)
-        {
-            $info = $connection->errorInfo();
-            echo("<p>Error: {$info[2]}</p>");
-            exit();
-        }
-        */
         $stmt=$connection->prepare("SELECT species_name, colour, gender, birth_year, age FROM animal WHERE name=:name AND VAT=:vat_owner ");
         $stmt->bindParam(':name',$animal_name);
         $stmt->bindParam(':vat_owner', $vat_owner);
